@@ -1,0 +1,83 @@
+\documentclass[11pt]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{ccg-macros}
+
+% pandoc transfers h2 to subsections, I prefer h2 for sections
+\let\subsubsection\subsection
+\let\subsection\section
+\let\section\chapter
+\let\chapter\part
+% section numbering
+\setcounter{secnumdepth}{5}
+% urls as footnotes
+\usepackage[unicode=true]{hyperref}
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+% fix: parskip mangles ams table of contents
+\usepackage{parskip}
+\makeatletter
+\renewcommand\tableofcontents{%
+    \@starttoc{toc}%
+}
+\makeatother
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\title{Introduction to Homology}
+\author{Colton Grainger (MATH 6220 Topology 2)}
+\date{2019-01-14}
+\thanks{\emph{Git Repo:} \url{https://github.com/coltongrainger/fy19top2}}
+
+\begin{document}
+
+\maketitle
+
+\subsection{Problems due 2019-01-30}
+
+\subsubsection{}
+
+Let \(X = \bigcup_{i\in I} X_i\) where the \(X_i\) are the (disjoint)
+path components of \(X\). Prove that
+\[H_*(X) \cong \bigoplus_{i\in I} H_*(X_i).\]
+
+\subsubsection{}
+
+Let \(X\) and \(Y\) be path connected spaces.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Prove that any map \(f \colon X \to Y\) induces an isomorphism
+  \(f_* \colon H_0(X) \xrightarrow{\cong} H_0(Y)\).
+\item
+  Prove that any map \(f \colon X \to X\) induces the identity on
+  \(H_0(X)\).
+\end{enumerate}
+
+\subsubsection{}
+
+Use the Hurewicz theorem to solve the following problems:
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Compute \(H_1(K)\) for the Klein bottle \(K\).
+\item
+  Compute \(H_1\) of \(X=\prod_{j \in J} X_j\) for topological spaces
+  \(X_j\) in terms of \(H_1(X_j)\).
+\item
+  Let \(X_i\) with base points \(x_i \in X_i\). Suppose that there are
+  open sets \(x_i\in U_i \subseteq X_i\) such that \(x_i\) is a
+  deformation retract of \(U_i\). Show that
+  \[{H}_1 \left( \bigvee_{i\in I}  X_i \right)  \cong \bigoplus_{i\in I} {H}_1(X_i).\]
+\end{enumerate}
+
+\subsubsection{}
+
+Let \(f \colon X \to Y\) be a covering space of path connected spaces
+with \(f(x_0) = y_0\). By the fundamental theorem of covering spaces,
+\(f_{\#} \colon \pi_1(X,x_0) \to \pi_1(Y, y_0)\) is a monomorphism. Is
+\(f_* \colon H_*(X) \to H_*(Y)\) also a monomorphism. Prove that it is,
+or give a counterexample.
+
+\end{document}
