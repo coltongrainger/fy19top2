@@ -1,0 +1,290 @@
+\documentclass[10pt]{amsart}
+\usepackage{fullpage}
+% https://tex.stackexchange.com/questions/174073
+\usepackage{parskip}
+
+% macros
+\usepackage{ccg-macros}
+\usepackage{amscd, amssymb}
+\usepackage{physics}
+
+% pandoc is utf8 native
+\usepackage[utf8]{inputenc}
+
+% pandoc transfers h2 to subsections, I prefer h2 for sections
+\let\subsubsection\subsection
+\let\subsection\section
+\let\section\chapter
+\let\chapter\part
+
+% pandoc section numbering
+\setcounter{secnumdepth}{5}
+
+% pandoc urls as footnotes
+\usepackage[unicode=true]{hyperref}
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+
+
+% pandoc for upquote if available
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+% tables, pandoc manges export
+
+
+
+
+
+\usepackage[all]{xy}
+
+% pandoc prevent overfull lines
+\setlength{\emergencystretch}{3em}  
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% pandoc default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\title{First look at the Universal Coefficient Theorem}
+\author{Colton Grainger (scribe) \and Marvin Qi (presenter)}
+\date{2019-02-13}
+
+\begin{document}
+
+\maketitle
+
+
+
+This problem is set from Bredon {[}1, No. IV.5.1{]}; it works out
+techniques that might later play into a proof of the universal
+coefficient theorem.
+
+\emph{Given}. Let \(p \colon \ZZ \to \ZZ\) be multiplication by the
+prime \(p\), and consider the short exact sequence \begin{equation}
+0 \to \ZZ \xrightarrow{p} \ZZ \xrightarrow{\pi} \ZZ_p \to 0.
+\label{eq:p}
+\end{equation}
+
+Say \(X\) is a topological space. We assume
+\(\Delta_*(-) \colon \mathsf{Top} \to \mathsf{Comp}\) is the singular
+chain functor from topological spaces to chain complexes of abelian
+groups, with \(H_*(-) \colon \mathsf{Comp} \to \mathsf{GradedAb}\) the
+homology functor on chain complexes. For an abelian group \(G\), denote
+by \(H_*(C_*; G)\) the \emph{homology of \(C_*\) with coefficients in
+\(G\)}, which is the homology of the chain complex \(G \otimes C_*\)
+with boundary operator \(\id_G \otimes \partial\).
+
+\emph{To prove.} There is an exact sequence \begin{equation}
+0 \to \ZZ_p \otimes H_n(X) \to H_n(X;\ZZ_p) \to \Tor(H_{n-1}(X), \ZZ_p) \to 0,
+\label{eq:wts}
+\end{equation} with a homomorphism
+\(H_n(X; \ZZ_p) \to \ZZ_p \otimes H_n(X)\) such that \eqref{eq:wts}
+splits.
+
+\emph{Proof.} We'll construct the exact sequence \eqref{eq:wts}, then
+the splitting homomorphism.
+
+Each group in \(\Delta_*(X)\) is free abelian, and, in particular, flat
+as a \(\ZZ\)-module. Thus tensoring the short exact sequence
+\eqref{eq:p} on the right by the \(n\)th singular chain \(\Delta_n(X)\)
+group preserves exactness, and produces: \begin{equation}
+\xymatrix{
+0 \ar[r] & \ZZ\otimes \Delta_n(X) \ar[r]^{p\otimes \id_\Delta} & \ZZ\otimes \Delta_n(X) \ar[r]^{\pi\otimes \id_\Delta} & \ZZ_p \otimes\Delta_n(X) \ar[r]&  0
+}
+\label{eq:level}
+\end{equation}
+
+Lining up copies of \eqref{eq:level} levelwise with the appropriate
+differentials, we exhibit the short exact sequence of chain complexes:
+\begin{equation}
+\xymatrix{
+& \vdots \ar[d] & \vdots \ar[d] & \vdots \ar[d] &\\
+0 \ar[r] & \ZZ\otimes \Delta_n(X) \ar[d]^{\id_\ZZ \otimes \partial_n} \ar[r]^{p\otimes \id_\Delta} & \ZZ\otimes \Delta_n(X) \ar[d]^{\id_\ZZ \otimes \partial_n} \ar[r]^{\pi\otimes \id_\Delta} & \ZZ_p \otimes\Delta_n(X) \ar[d]^{\id_{\ZZ_p} \otimes \partial_n}\ar[r]&  0\\
+0 \ar[r] & \ZZ\otimes \Delta_{n-1}(X) \ar[d] \ar[r]^{p\otimes \id_\Delta}  & \ZZ\otimes \Delta_{n-1}(X) \ar[d] \ar[r]^{\pi\otimes \id_\Delta} & \ZZ_p \otimes\Delta_{n-1}(X) \ar[d] \ar[r]&  0\\
+& \vdots & \vdots & \vdots  &\\
+}
+\label{eq:ch1}
+\end{equation}
+
+As abelian groups, we'll identify
+\(\ZZ \otimes \Delta_n(X) = \Delta_n(X)\) and
+\(\ZZ_p \otimes \Delta_n(X) = \Delta_n(X)/p\) (the cokernel of the
+\(p\)th multiple map). Accordingly, we'll write the homomorphisms
+\(p \otimes \id_\Delta = p\), \(\pi \otimes \id_\Delta = \pi\), with all
+the differentials \(\id \otimes \partial_n\) as \(\partial\). Given
+these abbreviations, the short exact sequence \eqref{eq:ch1} becomes:
+\begin{equation}
+\xymatrix{
+0 \ar[r] & \Delta_*(X) \ar[r]^{p} &\Delta_*(X) \ar[r]^{\pi} & \Delta_*(X)/p \ar[r]&  0
+}
+\label{eq:ses}
+\end{equation}
+
+By inspection of the definition of homology with coefficients along with
+the diagram \eqref{eq:ch1}, the long exact sequence of homology groups
+induced by \eqref{eq:ses} is: \begin{equation}
+\xymatrix{
+\cdots \ar[r]^{\delta_*} & H_n(X) \ar[r]^{ p_* } & H_n(X) \ar[r]^{ \pi_* } & H_n(X; \ZZ_p) \ar[r]^{\delta_*} & H_{n-1}(X) \ar[r]^{p_*} & \cdots
+}
+\label{eq:les}
+\end{equation}
+
+We now make an aside to argue the algebraic structure of a long exact
+sequence is encoded in a series of intertwined short exact sequences
+{[}2, No. 2.5{]}. Start by considering an exact sequence of abelian
+groups
+\[\cdots \to A_{n+2} \to A_{n+1} \to A_{n} \to A_{n-1} \to A_{n-2} \to \cdots.\]
+By definition of exactness at \(A_n\),
+\begin{equation}\label{eq:defexact}\im (A_{n+1} \to A_n) = \ker(A_n \to A_{n-1}).\end{equation}
+Quotienting by the kernel of the map out of \(A_n\), we have an
+isomorphism onto the image in \(A_{n-1}\) \begin{equation}
+A_n/\ker (A_n \to A_{n-1}) \cong \im(A_n \to A_{n-1}) 
+\label{eq:isomthm}
+\end{equation} Now, the cokernel of an additive homomorphism is the
+target group quotiented by the incoming image. Substituting
+\eqref{eq:defexact} into \eqref{eq:isomthm} gives an example of such
+\[\coker ( A_{n+1} \to A_n) := A_n/\im (A_{n+1} \to A_n) \cong \im(A_n \to A_{n-1}).\]
+Putting it all together, there's a group \(C_n\) that is
+
+\begin{itemize}
+\tightlist
+\item
+  the kernel of the map \(A_n \to A_{n-1}\),
+\item
+  isomorphic to the image of the map \(A_{n+1} \to A_n\), and
+\item
+  isomorphic to the cokernel of the map \(A_{n+2} \to A_{n+2}\).
+\end{itemize}
+
+Moreover, there are groups \(C_{n+k}\) for \(k \in \ZZ\) satisfying
+analogously conditions. We may now decorate our long exact sequence with
+inclusions and natural projections so that the diagram \begin{equation}
+\xymatrix @=2pt@! { %We want equal spacing, and the entries close together
+&&0\ar[dr]&&0&&0\ar[dr]&&0&&&&0\\
+&&&C_{n+1}\ar[ur]\ar[dr]&&&&C_{n-1}\ar[ur]\ar[dr]&&&&C_{n-3}\ar[ur]\\
+\cdots \ar[rr]&&A_{n+2}\ar[rr]\ar[ur]&&A_{n+1}\ar[rr]\ar[dr]&&A_{n}\ar[rr]\ar[ur]&&A_{n-1}\ar[rr]\ar[dr]&&A_{n-2}\ar[ur]\ar[rr]&&\cdots\\
+&C_{n-2}\ar[ur]&&&&C_{n}\ar[ur]\ar[dr]&&&&C_{n-2}\ar[ur]\ar[dr]&&&&\\
+0\ar[ur]&&&&0\ar[ur]&&0&&0\ar[ur]&&0&&&&
+}
+\label{eq:knit}
+\end{equation} is exact. We emphasize that the crossing maps are either
+\emph{inclusions} or \emph{natural projections}. The crossing sequences
+are short exact because, e.g., for
+\(0 \to C_n \to A_n \to C_{n-1} \to 0\),
+
+\begin{itemize}
+\tightlist
+\item
+  \(C_n\) is the kernel, so injects and passes through \(A_n\) to \(0\)
+  in \(C_{n-1}\),
+\item
+  \(A_n\) surjects onto \(C_{n-1}\) and passes to \(0\),
+\item
+  any element in \(A_n\) that passes to \(0\) in \(C_{n-1}\) must be in
+  the image of \(C_n\) in \(A_n\), because \(A_n \to C_{n-1}\) is the
+  natural projection onto \(A_n / \ker(A_n \to A_{n-1}) = A_n /C_n\).
+\end{itemize}
+
+We now construct the desired short exact sequence \eqref{eq:wts}.
+Placing the long exact sequence of homology groups \eqref{eq:les} into
+the position of the long exact sequence in the cross stitched diagram
+\eqref{eq:knit}, one visibly obtains the short exact sequence:
+\begin{equation}
+\xymatrix{
+0 \ar[r] & \coker\big(H_n(X) \xrightarrow{p_*} H_n(X)\big) \ar[r]  & H_n(X; \ZZ_p) \ar[r] & \ker\big( H_{n-1}(X) \xrightarrow{p_*} H_{n-1}(X)\big) \ar[r] & 0
+}
+\label{eq:sestosplit}
+\end{equation}
+
+This sequence \eqref{eq:sestosplit} is isomorphic to the one we wanted
+\eqref{eq:wts}, as
+\[\coker\big(H_n(X) \xrightarrow{p_*} H_n(X)\big) \cong \ZZ_p \otimes H_n(X)\]
+and
+\[\ker\big( H_{n-1}(X) \xrightarrow{p_*} H_{n-1}(X)\big) =: \Tor(H_{n-1}(X), \ZZ_p).\]
+
+What remains to be proven is that there is a homomorphism from
+\(H_n(X, \ZZ_p)\) down to \(\ZZ_p \otimes H_n(X)\) that (left) inverts
+the inclusion of \(\ZZ_p \otimes H_n(X)\) up into \(H_n(X, \ZZ_p)\). My
+argument here closely follows {[}2, No. 3.21{]}.
+
+We'll work levelwise for a while in the singular chain complex
+\(\Delta_*(X)\). Let \(Z_n\) be the cycle subgroup of \(\Delta_n(X)\)
+and \(B_{n-1}\) the boundary subgroup \(\delta \Delta_n(X)\) in
+\(\Delta_{n-1}(X)\). Observe that \(Z_n\) includes into \(\Delta_n(X)\)
+which projects onto \(B_{n-1}\). So we have the short exact sequence of
+free abelian groups \begin{equation}
+\xymatrix{
+0 \ar[r] & Z_n \ar[r]^f & \Delta_n(X) \ar@/^1pc/ @{-->} [l]^g \ar[r] & B_{n-1} \ar[r] & 0,
+}
+\end{equation} that splits with \(g \circ f = \id_{Z_n}\). Extend \(g\)
+to the quotient \(H_n(X)\) so that the following diagram commutes:
+\begin{equation}
+\label{eq:extend}
+\xymatrix{
+\Delta_n(X)\ar[d]^g \ar@{-->}[dr]^{g'} & \\
+Z_n \ar[r] & H_n(X)
+}\end{equation}
+
+Consider the graded abelian group \(\{H_k(X)\}_{k \in \ZZ}\) in a chain
+with trivial differentials
+\[\ldots \xrightarrow{0} H_{n+1}(X) \xrightarrow{0} H_n(X) \xrightarrow{0} H_{n-1}(X) \xrightarrow{0} \ldots.\]
+Call this chain complex \(H_*(X)\). We induce a chain map \(g_*\) from
+\(\Delta_*(X)\) to \(H_*(X)\) with \(g'\):
+
+\begin{minipage}{.5\textwidth}
+\begin{equation}
+\xymatrix{
+\vdots \ar[d]^\partial & \vdots \ar[d]^0\\
+\Delta_{n+1}(X) \ar[r]^{g'} \ar[d]^\partial & H_{n+1}(X) \ar[d]^0\\
+\Delta_{n}(X) \ar[r]^{g'} \ar[d]^\partial& H_{n}(X) \ar[d]^0\\
+\Delta_{n-1}(X) \ar[r]^{g'} \ar[d]^\partial& H_{n-1}(X) \ar[d]^0\\
+\vdots & \vdots\\
+}\label{eq:trivialchain}\end{equation}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+\begin{equation}
+\xymatrix{
+\vdots \ar[d]^{\id\otimes\partial} & \vdots \ar[d]^0\\
+\ZZ_p\otimes\Delta_{n+1}(X) \ar[r]^{\id \otimes g'} \ar[d]^{\id \otimes \partial} & \ZZ_p\otimes H_{n+1}(X) \ar[d]^0\\
+\ZZ_p\otimes\Delta_{n}(X)   \ar[r]^{\id \otimes g'} \ar[d]^{\id \otimes \partial} & \ZZ_p\otimes H_{n}(X)   \ar[d]^0\\
+\ZZ_p\otimes\Delta_{n-1}(X) \ar[r]^{\id \otimes g'} \ar[d]^{\id \otimes \partial} & \ZZ_p\otimes H_{n-1}(X) \ar[d]^0\\
+\vdots & \vdots\\
+}\end{equation}
+\end{minipage}
+
+Observe that
+\(\partial(\Delta_{n+1}(X)) = B_n(X) = \ker\left(Z_n \to H_n(X)\right)\)
+so that each square in \eqref{eq:trivialchain} commutes. We may then
+tensor both chains by \(\ZZ_p\) on the right, obtaining
+\[\ZZ_p \otimes \Delta_*(X) \xrightarrow{\id \otimes g_*} \ZZ_p \otimes H_n(X).\]
+When we take homology on \(\ZZ_p \otimes \Delta_*(X)\) by definition we
+have \(H_*(X, \ZZ_p)\). However, when computing homology in the chain
+complex \(\ZZ_p \otimes H_n(X)\), the image of each map in the complex
+is \emph{trivial}, so the homology of the complex is
+\(\ZZ_p \otimes H_*(X)\).
+
+The map \({\id \otimes g_*}\) of chain complexes induces a homomorphism
+\(H_*(\id\otimes g')\) on homology from
+\(H_*(X, \ZZ_p) \to \ZZ_p \otimes H_*(X)\). In particular, at the
+\(n\)th level,
+\begin{equation}\label{eq:finish}H_n(X, \ZZ_p) \xrightarrow{H_*(\id \otimes g')} \ZZ_p \otimes H_n(X).\end{equation}
+By construction in \eqref{eq:extend} of \(g'\) as the extension of the
+splitting map \(g\) (where \(g \circ f = \id_{Z_n}\)), the induced map
+\(H_*(\id \otimes g')\) in \eqref{eq:finish} is a left inverse to the
+inclusion of \(\ZZ_p \otimes H_n(X)\) into \(H_n(X, \ZZ_p)\). \qedsymbol
+
+\subsection*{References}
+\addcontentsline{toc}{subsection}{References}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-Bre93}{}%
+{[}1{]} G. E. Bredon, \emph{Topology and Geometry}. New York:
+Springer-Verlag, 1993.
+
+\leavevmode\hypertarget{ref-Che09}{}%
+{[}2{]} J. L. Chen, ``Universal Coefficient Theorem for Homology,''
+2009.
+
+
+\end{document}
