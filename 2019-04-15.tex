@@ -20,9 +20,9 @@ which arises from the map on cochains (say $f\colon A_* \to \Lambda$ and $g\colo
 \renewcommand{\ev}{\mathrm{ev}}
 
 \begin{defn}
-   Let $X \in \Top$ and $G \in \Ab$. Shouldn't there be an \term{evaluation} $\ev$ from chain complex of $p$-cochains $f \colon \Delta_p(X) \to G$ tensored with the chain complex $\Delta_p(X)$ of $p$-chains? 
+   Let $X \in \Top$ and $\Lambda \in \Ring$. Shouldn't there be an \term{evaluation} $\ev$ from chain complex of $p$-cochains $f \colon \Delta_p(X) \to \Lambda$ tensored with the chain complex $\Delta_p(X)$ of $p$-chains? 
     \[
-        \Delta^p(X; G) \otimes \Delta_p(X) \xrightarrow{\ev} G
+        \Delta^p(X; \Lambda) \otimes \Delta_p(X) \xrightarrow{\ev} \Lambda
     \]
     In fact, there is such an evaluation:
     \[
@@ -32,20 +32,20 @@ which arises from the map on cochains (say $f\colon A_* \to \Lambda$ and $g\colo
 
 We'll see that $\ev$ induces a map on cohomology, which is denoted by the brackets (in Halmos style) 
 \[
-   \ang{\abs{f}, \abs{ c }} \in G.
+   \ang{\abs{f}, \abs{ c }} \in \Lambda.
 \]
 
 \begin{lem}[Kronecker pairing]
-   The evaluation $\Delta^p(X; G) \otimes \Delta_p(X) \xrightarrow{\ev} G$ induces a homomorphism out of the graded ring
+   The evaluation $\Delta^p(X; \Lambda) \otimes \Delta_p(X) \xrightarrow{\ev} \Lambda$ induces a homomorphism out of the graded ring
    \begin{equation}
        \label{kpairing}
-       H^p(X;G) \otimes H_p(X) \to G
+       H^p(X;\Lambda) \otimes H_p(X) \to \Lambda
    \end{equation}
    such that $\ang{\abs{f}, \abs{ c }}\mapsto f(c)$.
 \end{lem}
 
 \begin{proof}
-The \term{Kronecker pairing} is the argument that $f(c)$ does not depend on representatives $f$ or $c$ (from the cochain, resp, chain complexes). Consider that in the proof of the universal coefficient theorem, we found a map $\beta$ from $\coho{X}{G}$ to $\Hom(H_p(X), G)$ such that $\abs{f} \mapsto \set{ \abs{c} \mapsto f(c) }$ gave a group homomorphism. Use this.
+The \term{Kronecker pairing} is the argument that $f(c)$ does not depend on representatives $f$ or $c$ (from the cochain, resp, chain complexes). Consider that in the proof of the universal coefficient theorem, we found a map $\beta$ from $\coho{X}{\Lambda}$ to $\Hom(H_p(X), \Lambda)$ such that $\abs{f} \mapsto \set{ \abs{c} \mapsto f(c) }$ gave a group homomorphism. Use this.
 \end{proof}
 
 \begin{lem}[A sign convention]
@@ -79,7 +79,7 @@ The \term{Kronecker pairing} is the argument that $f(c)$ does not depend on repr
 \end{note}
 
 \begin{comp}[Properties of the Cup Product]{prop}{enumerate}
-    \item The cup product is natural for $X$ in $\Top$ and $G$ in $\Ring$. Given a continuous map $\phi \colon X \to Y$ in $\Top$, the induced map on cohomology satisfies 
+    \item The cup product is natural for $X$ in $\Top$ and $\Lambda$ in $\Ring$. \Lambdaiven a continuous map $\phi \colon X \to Y$ in $\Top$, the induced map on cohomology satisfies 
        \[
        \phi^*(\alpha \smile \beta) = \phi^*(\alpha) \smile \phi^*(\beta)
        \]

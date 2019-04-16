@@ -1,0 +1,71 @@
+\documentclass[onesided]{ccg-pset}
+
+\course{Math 6220}
+\psnum{6}
+\author{Colton Grainger}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+\item 
+    \begin{enumerate}
+        \item Chapter V, Section 7, 284: 5. \textit{If $H_*(X)$ is finitely generated, then 
+            \[
+                \chi(X) = \sum (-1)^i \dim H_i(X; \Lambda) \qq{for any field $\Lambda$.}
+        \]}
+    \item Chapter VI, Section 1, 321: 3. \textit{For spaces $X$, $Y$ of bounded finite type, 
+        \[
+            \chi(X \times Y) = \chi(X)\chi(Y).
+        \]}
+    \end{enumerate}
+
+
+\item Chapter VI, Section 1, 321: 2. 
+    \textit{Let $X_p$ be the space resulting from attaching an $n$-cell to $S^{n-1}$ by a map of degree $p$. Use the Künneth Theorem to compute the homology of $X_p \times X_q$ for any $p, q$.}
+
+\begin{note}[]
+    By a \emph{graded commutative ring}, we will mean a graded abelian group $R^*$ together with a homomorphism of graded abelian groups
+    \[\mu \colon R^* \otimes R^* \to R^* \]
+    such that,
+    \begin{itemize}
+    \item There exists $1 \in R^0$ which is a two sided unit for $\mu$.
+    \item $\mu (a\otimes b) = (-1)^{\deg(a)\deg(b)} \mu(b\otimes a)$.
+    \end{itemize}
+    The cup product gives a graded commutative ring structure on the cohomology of a space. (See Chapter VI, Section 4 and Example 4.12.)
+\end{note}
+
+\item 
+    \begin{enumerate}
+        \item \textit{Write down the ring structure of $H^*(S^n)$ and of $H^*(S^n \times S^m)$.}        
+        \item \textit{We will see later that $H^*(\R P^n ; \Z/2) \cong (\Z/2)[x]/\ang{ x^{n+1} }$ for $x \in H^1(\R P^n ; \Z/2)$. Use this to prove that $\R P^3$ is not homotopy equivalent to $\R P^2 \vee S^3$.}
+        \item Chapter VI, 334: 3. \textit{Show that any map $S^4 \to S^2 \times S^2$ must induce the zero homomorphism on $H_4(\bl)$.}
+\end{enumerate}
+
+\item Chapter VI, 334: 5.
+\textit{Any two chain maps $\Phi, \Psi \colon \Delta_*(X) \to \Delta_*(X\otimes X)$ that agree with the diagonal approximation
+         \[
+             \Delta(x) = x \otimes x \qq{in the $0$th degree}
+         \]
+         are chain homotopic: $\Phi \simeq \Psi$.}
+
+\begin{defn*}[Alexander--Whitney diagonal approximation]
+   Let $\sigma \colon \Delta_n \to X$ be a singular $n$-simplex in $X$. The \term{Alexander--Whitney diagonal approximation} explicitly computes the image of $\sigma$ under the chain map $\Delta \colon \Delta_*(X) \to \Delta_*(X) \otimes \Delta_*(X)$ from the \term{front and back faces} of $\sigma$.
+   \[
+       \Delta \sigma  = \sum_{p + q = n} \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q
+   .\]
+\end{defn*}
+
+\begin{prop*}[Computing the cup product]
+    Say $f$ and $g$ are in the cochains with degrees $p$ and $q$ respectively, such that $p+q = n$. Then
+    \begin{align*}
+        (f \smile g)(\sigma) &= (f \otimes g)(\Delta\sigma)\\
+                           &= (f \otimes g) \paren{\sum_{i+j = n} \norm{ \sigma }_\text{front}^i \otimes \norm{ \sigma }_\text{back}^j} \\
+                           &= (f \otimes g) \paren{ \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q}  \\
+                           & = (-1)^{\deg g \deg f} f(  \norm{ \sigma }_\text{front}^p ) g(\norm{ \sigma }_\text{back}^q) \quad (\text{an element of } \Lambda).
+    \end{align*}
+\end{prop*}
+\end{enumerate}
+
+\end{document}
