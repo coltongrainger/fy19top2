@@ -48,77 +48,90 @@ We'll see that $\ev$ induces a map on cohomology, which is denoted by the bracke
 The \term{Kronecker pairing} is the argument that $f(c)$ does not depend on representatives $f$ or $c$ (from the cochain, resp, chain complexes). Consider that in the proof of the universal coefficient theorem, we found a map $\beta$ from $\coho{X}{G}$ to $\Hom(H_p(X), G)$ such that $\abs{f} \mapsto \set{ \abs{c} \mapsto f(c) }$ gave a group homomorphism. Use this.
 \end{proof}
 
+\begin{lem}[A sign convention]
+   For the singular chain complexes over a topological space $X$, let $f, g$ be cochains in $\Delta^*(X)$ and $\alpha, \beta$ chains in $\Delta_*(X)$. Then,
+    $(f\otimes g)(\alpha \times \beta) = (-1)^{\deg \alpha \deg g} f(\alpha)g(\beta)$.
+\end{lem}
+
 \begin{defn}[Cap product]
    The \term{cap product} operation over a topological space $X$ is the above~\eqref{kpairing} pairing, which is ``given by combining the \term{Kronecker pairing} of the cohomology class with the image of the homology class under diagonal and using the Eilenberg-Zilber theorem.'' (See \url{https://ncatlab.org/nlab/show/cap+product}.)
 \end{defn}
 
-\begin{prop}[Computing with cochains]
-   For the singular chain complexes over a topological space $X$, let $f, g$ be cochains in $\Delta^*(X)$ and $\alpha, \beta$ chains in $\Delta_*(X)$. Then explicitly, 
-    $(f\otimes g)(\alpha \times \beta) = (-1)^{\deg \alpha \deg g} f(\alpha)g(\beta)$.
-\end{prop}
-
-\begin{proof}
-\TODO. Verify that the equation
-\[
-    \delta(f \smile g) = \delta f \smile g + (-1)^{\deg}f \smile \delta g
-\]
-follows from the boundary formula for the cross product $\times$.
-\end{proof}
-
 \begin{defn}[Cup product]
-   For $X \in \Top$, the diagonal map $d \colon X \to X \times X$ yields a chain map $d_\Delta \colon \Delta_*(X) \to \Delta_*(X)$ such that 
+   Let $X \in \Top$ and consider the diagonal map $d \colon X \to X \times X$. There's an induced chain map $d_\Delta \colon \Delta_*(X) \to \Delta_*(X)$. Then $d_\Delta$ precomposed with $\theta$ (from Eilenberg-Zilber) is the natural \term{diagonal approximation} $\Delta$. Schematically,
    \[
-      d_\Delta \qq{precomposed with} \theta \qq{(from Eilenberg-Zilber) is the natural \term{diagonal approximation}} \Delta.
+      \xymatrix{
+         % should this be injective?  <ccg, 2019-04-15> %
+         0 \ar[r]
+         & \Delta_*(X) \ar@{->}[r]^-{d_\Delta} \ar@/_2pc/[rr]^\Delta
+         & \Delta_*(X \times X) \ar[r]^-\theta 
+         & \Delta_*(X) \otimes \Delta_*(X)}
    .\]
-   Schematically,
-   \[
-      \xymatrix{\Delta_*(X) \underset{\inj}{d_\Delta} \Delta_*(X \times X) \ar[r]^\theta 
-                  & \Delta_*(X) \otimes \Delta_*(X)}
-   .\]
-   The \term{cup product} of two homogeneous cochains $f$ and $g$ is defined to be \[f \smile g = (f \otimes g) \theta d_\Delta.\]
+   The \term{cup product} of two homogeneous cochains $f$ and $g$ is thus defined to be \[f \smile g = (f \otimes g) \theta d_\Delta.\]
 \end{defn}
 
-\begin{todo}[Chain maps on $\Delta_*(X) \to \Delta_*(X\otimes X)$]
-    Any two chain maps $\Phi, \Psi \colon \Delta_*\to \Delta_*(X\otimes X)$ which agree with 
+\begin{note}[]
+    The equation
     \[
-        \Delta(x) = x \otimes x \qq{in the $0$th degree}
+        \delta(f \smile g) = \delta f \smile g + (-1)^{\deg}f \smile \delta g
     \]
-    are chain homotopic.  
-\end{todo}
+    follows from the boundary formula for the cross product $\times$.
+\end{note}
 
-\begin{defn}[Alexander Whitney Diagonal Approximation Map]
-    Let $\sigma \colon \Delta_n \to X$ be a singular $n$-simplex in $X$. Then there's a map (from the front and back faces \TODO)
+\begin{comp}[Properties of the Cup Product]{prop}{enumerate}
+    \item The cup product is natural for $X$ in $\Top$ and $G$ in $\Ring$. Given a continuous map $\phi \colon X \to Y$ in $\Top$, the induced map on cohomology satisfies 
+       \[
+       \phi^*(\alpha \smile \beta) = \phi^*(\alpha) \smile \phi^*(\beta)
+       \]
+       for all homogeneous cochains $\alpha, \beta$ in $\Delta^*(X)$.
+    \item $\alpha \smile 1 = \alpha = 1 \smile \alpha$, where $1$ is the class of the augmentation $\epsilon$ (\TODO. Be specific.)
+    \item The cup product $\smile$ is associative.
+    \item The cup product is \term{skew-commutative}:
+       \[\alpha \smile \beta = (-1)^{\deg \alpha \deg \beta} \paren{ \beta \smile \alpha }. \] 
+\end{comp}
+
+\begin{defn}[Alexander--Whitney diagonal approximation]
+   Let $\sigma \colon \Delta_n \to X$ be a singular $n$-simplex in $X$. The \term{Alexander--Whitney diagonal approximation} explicitly computes the image of $\sigma$ under the chain map $\Delta \colon \Delta_*(X) \to \Delta_*(X) \otimes \Delta_*(X)$ from the \term{front and back faces} of $\sigma$.
    \[
        \Delta \sigma  = \sum_{p + q = n} \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q
    .\]
 \end{defn}
 
-Say $f$ and $g$ are in the cochains with degrees $p$ and $q$ respectively, such that $p+q = n$. Then
-\begin{align*}
-    (f \smile g)(\sigma) &= (f \otimes g)(\Delta\sigma)\\
-                       &= (f \otimes g) \paren{\sum_{i+j = n} \norm{ \sigma }_\text{front}^i \otimes \norm{ \sigma }_\text{back}^j} \\
-                       &= (f \otimes g) \paren{ \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q}  \\
-                       & = (-1)^{\deg g \deg f} f(  \norm{ \sigma }_\text{front}^p ) g(\norm{ \sigma }_\text{back}^q) \in \Lambda
-\end{align*}
-
-To laundry list facts about the cup product.
-\begin{enumerate}
-    \item The cup product is natural. If I have a map $\phi \colon X \to Y$ in $\Top$, then $\phi^*(\alpha \smile \beta) = \phi^*(\alpha) \smile \phi^*(\beta)$.
-    \item $\alpha \smile 1 = \alpha = 1 \smile \alpha$, where $1$ is the class of the augmentation.
-    \item $\smile$ is associative.
-    \item $\alpha \smile \beta = (-1)^{\deg \alpha \deg \beta} \beta \smile \alpha$ is (anti)commutative.
-\end{enumerate}
- 
-\begin{todo}[A derivation from the cup product]
-Let $A, B  \subset X$ in $\Top$ such that $A, B$ are open in $X$ (this allows us to get $\Delta_*(A) + \Delta_*(B) \surj \Delta_*(A \smile B)$). Then
-        \[
-            \coho{X, A}{\Lambda} \otimes \coho{X, B}{\Lambda} \to \coho{X, A}{\Lambda}
-        \]
-        with (convince oneself! from the snake lemma for the exact sequence on cochains) a induced long exact sequence
-        \[
-            \xymatrix{\ldots & \ar[l] H^{*+1}(X, A; \Lambda) & \ar[l]^\delta H^*(A, \Lambda) & \ar[l]^{i^*} H^*(X) & \ar[l] \ldots}
-        \]
-        such that $\delta$ is a derivation (of ?) \TODO\  defined by 
-        \[\delta^*(\alpha \smile i^*(\beta)) = \alpha \smile \delta^*(\beta).\]
-% this is wrong:  <ccg, 2019-04-15> %
+\begin{todo}
+   Any two chain maps $\Phi, \Psi \colon \Delta_*(X) \to \Delta_*(X\otimes X)$ that agree with the diagonal approximation
+    \[
+        \Delta(x) = x \otimes x \qq{in the $0$th degree}
+    \]
+    are chain homotopic: $\Phi \simeq \Psi$.
 \end{todo}
+
+\begin{prop}[Computing the cup product]
+    Say $f$ and $g$ are in the cochains with degrees $p$ and $q$ respectively, such that $p+q = n$. Then
+    \begin{align*}
+        (f \smile g)(\sigma) &= (f \otimes g)(\Delta\sigma)\\
+                           &= (f \otimes g) \paren{\sum_{i+j = n} \norm{ \sigma }_\text{front}^i \otimes \norm{ \sigma }_\text{back}^j} \\
+                           &= (f \otimes g) \paren{ \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q}  \\
+                           & = (-1)^{\deg g \deg f} f(  \norm{ \sigma }_\text{front}^p ) g(\norm{ \sigma }_\text{back}^q) \quad (\text{an element of } \Lambda).
+    \end{align*}
+\end{prop}
+
+\begin{todo}[A derivation from the cup product]
+Let $A, B  \subset X$ in $\Top$ be open in $X$. Verify the following:
+
+\begin{enumerate}
+   \item $\Delta_*(A) + \Delta_*(B) \surj \Delta_*(A \smile B)$.
+   \item $\coho{X, A}{\Lambda} \otimes \coho{X, B}{\Lambda} \to \coho{X, A}{\Lambda}$. \label{relativecoho}.
+    
+   \item From the snake lemma and~\eqref{relativecoho}, there's a long exact sequence
+        \[
+           \xymatrix{\cdots & \ar[l] H^{*+1}(X, A; \Lambda) & \ar[l]^-{\delta^{*}} H^*(A; \Lambda) & \ar[l]^-{i^*} H^*(X;\Lambda) & \ar[l] \cdots}
+        \]
+        that's natural in $X, A, B$ and $\Lambda$.
+        \item The connecting homomorphism $\delta$ is a derivation (\TODO\ of what?) defined by 
+% this is wrong:  <ccg, 2019-04-15> %
+        \[
+        \delta^*(\alpha \smile i^*(\beta)) = \alpha \smile \delta^*(\beta)
+        .\]
+\end{enumerate}
+\end{todo}
+
