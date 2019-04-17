@@ -6,6 +6,8 @@
 \date{\today}
 
 \begin{document}
+
+
 \maketitle
 
 \begin{enumerate}
@@ -47,29 +49,82 @@
 
 \newpage
 
-\begin{defn*}[Alexander--Whitney diagonal approximation]
-   Let $\sigma \colon \Delta_n \to X$ be a singular $n$-simplex in $X$. The \term{Alexander--Whitney diagonal approximation} explicitly computes the image of $\sigma$ under the chain map $\Delta \colon \Delta_*(X) \to \Delta_*(X) \otimes \Delta_*(X)$ from the \term{front and back faces} of $\sigma$.
-   \[
-       \Delta \sigma  = \sum_{p + q = n} \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q
-   .\]
-\end{defn*}
+% \begin{defn*}[Alexander--Whitney diagonal approximation]
+%    Let $\sigma \colon \Delta_n \to X$ be a singular $n$-simplex in $X$. The \term{Alexander--Whitney diagonal approximation} explicitly computes the image of $\sigma$ under the chain map $\Delta \colon \Delta_*(X) \to \Delta_*(X) \otimes \Delta_*(X)$ from the \term{front and back faces} of $\sigma$.
+%    \[
+%        \Delta \sigma  = \sum_{p + q = n} \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q
+%    .\]
+% \end{defn*}
 
-\begin{prop*}[Computing the cup product]
-    Say $f$ and $g$ are in the cochains with degrees $p$ and $q$ respectively, such that $p+q = n$. Then
-    \begin{align*}
-        (f \smile g)(\sigma) &= (f \otimes g)(\Delta\sigma)\\
-                           &= (f \otimes g) \paren{\sum_{i+j = n} \norm{ \sigma }_\text{front}^i \otimes \norm{ \sigma }_\text{back}^j} \\
-                           &= (f \otimes g) \paren{ \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q}  \\
-                           & = (-1)^{\deg g \deg f} f(  \norm{ \sigma }_\text{front}^p ) g(\norm{ \sigma }_\text{back}^q) \quad (\text{an element of } \Lambda).
-    \end{align*}
-\end{prop*}
+% \begin{prop*}[Computing the cup product]
+%     Say $f$ and $g$ are in the cochains with degrees $p$ and $q$ respectively, such that $p+q = n$. Then
+%     \begin{align*}
+%         (f \smile g)(\sigma) &= (f \otimes g)(\Delta\sigma)\\
+%                            &= (f \otimes g) \paren{\sum_{i+j = n} \norm{ \sigma }_\text{front}^i \otimes \norm{ \sigma }_\text{back}^j} \\
+%                            &= (f \otimes g) \paren{ \norm{ \sigma }_\text{front}^p \otimes \norm{ \sigma }_\text{back}^q}  \\
+%                            & = (-1)^{\deg g \deg f} f(  \norm{ \sigma }_\text{front}^p ) g(\norm{ \sigma }_\text{back}^q) \quad (\text{an element of } \Lambda).
+%     \end{align*}
+% \end{prop*}
 
 \item Chapter VI, 334: 5.
-      \textit{Any two chain maps $\Phi, \Psi \colon \Delta_*(X) \to \Delta_*(X\otimes X)$ that agree with the diagonal approximation
+      \textit{Any two chain maps $\alpha, \beta \colon \Delta_*(X) \to \Delta_*(X\otimes X)$ that agree with the diagonal approximation
       \[
           \Delta(x) = x \otimes x \qq{in the $0$th degree}
       \]
-      are chain homotopic: $\Phi \simeq \Psi$.}
+      are chain homotopic: $\alpha \simeq \beta$.}
+
+\begin{proof}
+
+   Let $X$ be a topological space. We will manipulate the functor:
+   \begin{equation}
+      \xymatrix{
+         \Top \ar[rr]^{\mathrm{Maps}(\Delta^n_\Top, \bl)} \ar@/_2pc/[rrrr]^{\Delta_*(\bl)}  
+         & & \cat{sSet} \ar[r]^{\Z\ang{\bl}}
+         & \cat{sAb} \ar[r]^{C(\bl)} 
+         & \cat{Ch}_*^+}
+   \end{equation} 
+
+   that eventually\footnote{Here $\mathrm{Maps}(\Delta^n_\Top, \bl)$ takes the space $X$ to the simplicial set $\mathrm{Sing}X$, which $\Z\ang{\bl}$ takes to the simplicial (free) abelian group $\Z \ang{\mathrm{Sing}X}$, which then $C(\bl)$ takes to the alternating face map complex $\Delta_*(X)$.} sends $X$ to its singular chain complex $\Delta_*(X)$.
+
+   So, let $\alpha, \beta \colon \Delta_*(X) \to \Delta_*(X) \otimes \Delta_*(X)$ be chain homomorphisms such that $\alpha = \beta$ on $\Delta_0(X)$:
+   \[
+      \alpha(x) = \beta(x) =  x \otimes x \qq{for $x \colon \Delta_{0} \to X$.}
+   \]
+   To see that $\alpha \simeq \beta$ are chain homotopic, we need to construct a sequence of homomorphisms
+   \[
+      \set{h_n \colon \Delta_n(X) \to \paren{\Delta_*(X) \otimes \Delta_*(X)}_{n+1}}_{n \in \Z_{\ge 0}}
+   \]
+   \newcommand{\sing}[1]{\mathrm{Sing}}
+   \newcommand{\sich}[2]{\Delta_{#1}(#2)}
+   such that, for each $n \in \Z_{\ge 0}$ and each singular simplex $\sigma \in \sich n X$, the homomorphisms $h_{n}$ and $h_{n-1}$ satisfy the homotopy condition
+   \begin{equation}
+      \label{hocondition}
+      \paren{\alpha_n - \beta_n}(\sigma) = \paren{\delta_{n+1} h_n - h_{n-1} \partial_n}(\sigma),
+   \end{equation}
+   which is an equality of chains in $\paren{\sich * X \otimes \sich * X}_n$.
+
+   For the \textsc{base case}, let $X$ be \emph{any topological space} and $\alpha$, $\beta$ \emph{any diagonal approximations}. Define \[h_0 \colon \sich 0 X \to \sich 0 X \otimes \sich 0 X\] by $h_0 (x) = 0$. Then (trivially) \[0 = \alpha_0 - \beta_0 = \delta_1 h_0 - h_{-1} \partial_0\] as $\alpha$ and $\beta$ are diagonal approximations that agree on $0$-simplices.
+
+   For the \textsc{inductive step}, let $X$, $\alpha$, and $\beta$ be as above, and say the first $p<n$ homomorphisms
+   \[
+      \set{h_p \colon \Delta_p(X) \to \paren{\Delta_*(X) \otimes \Delta_*(X)}_{p+1}}_{p < n}
+   \]
+   and satisfy the homotopy condition \eqref{hocondition}. 
+
+   We will complete the inductive step finding a chain homotopy $\eta$ on an {acyclic model}, $\Delta_n$. Consider the identity map $\iota_n \colon \Delta_n \to \Delta_n$ from the topological $n$-simplex $\Delta_n$ to itself. Note $\iota_n$ is both a singular $n$-simplex 
+   \[\iota_n \in \sing \Delta_n := \mathrm{Maps}(\Delta^n_\Top, \Delta_n),\] and a continuous map between topological spaces 
+   \[
+      \Delta_n \xrightarrow{\iota_n} \Delta_n.
+   \]
+   In particular, \[\delta \iota_n \in \Delta_{n-1}(\Delta_n)\] is a $n-1$-chain. 
+   So say that $A$ and $B$ are diagonal approximations for the singular chain complex $\sich * \Delta_n$.
+   By the inductive hypothesis, the homomorphisms $\eta_p$ for $p < n$ are defined. Therefore
+   \begin{equation}
+      \label{indhypo}
+      \paren{A_{n-1} - B_{n-1}}(\partial\iota_n) = \paren{\delta_{n1} \eta_{n-1} - \eta_{n-2} \partial_{n-1}}(\partial \iota_r),
+   \end{equation}
+   is an equality of chains in $\paren{\sich * \Delta_r \otimes \sich * \Delta_n}_{n-1}$. 
+\end{proof}
 
 \end{enumerate}
 
