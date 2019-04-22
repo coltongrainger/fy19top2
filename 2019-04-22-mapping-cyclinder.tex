@@ -1,0 +1,63 @@
+\documentclass[twosided]{ccg-pset}
+
+\course{Math 6220}
+\psnum{5}
+\author{Colton Grainger (notes)\\Ryan Mike (presenter)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+        \newcommand{\cyl}[1]{\mathrm{cyl}\paren{#1}} 
+
+    \item We work in the category $\cat{Ch}$ of chain complexes of abelian groups. 
+        For a given chain complex $C$, let $\cyl C$ denote the mapping cylinder of the identity map on $\cyl C$. 
+        
+        Explicitly, if $C$ is described by the level-wise groups and differentials
+        \begin{equation*}
+            C = \set{C_{i+1} \xrightarrow{d_{i+1}} C_{i}}_{i\in \Z}
+        \end{equation*}
+        then the mapping cylinder $\cyl C$ is described by level-wise groups and differentials
+        \begin{equation*}
+            \cyl C = \set{ \xymatrix{ C_i \ar[r]^{d_i} & C_{i-1} \\
+                        C_{i-1} \ar[r]^{-d_{i-1}} \ar[ru]^{\id} \ar[rd]^{-\id} & C_{i-2} \\
+                         C_i \ar[r]^{d_i} & C_{i-1} } : \qq{where $\id \colon C \to C$ is the identity}}.
+        \end{equation*}
+        Each level of $\cyl C$ is the direct product of groups, $C_i \oplus C_{i-1} \oplus C_i$, 
+        and the arrows indicate how elements of one component group are mapped into a component group of the next degree lower in the chain complex $\cyl C$.
+        
+        Writing the level-wise groups as column vectors and the differential $\partial$ of $\cyl C$ as a matrix is perhaps elucidating:
+        \begin{equation*}
+            \mqty[d & \id & 0\\ 0 & -d & 0\\ 0 & -\id & d] \colon \mqty[C_i\\C_{i-1}\\C_i]  \mapsto \mqty[C_{i-1}\\C_{i-2}\\C_{i-1}].
+        \end{equation*}
+
+        Now, say that $D$ is another chain complex, that is the codomain of two chain maps $f, g \colon C \to D$.  
+        \begin{claim*}[Extending chain maps to a mapping cylinder]
+            \label{extending_chain_maps_to_a_mapping_cylinder}
+            Two chain maps $f, g \colon C \to D$ are chain homotopic if and only if they extend to a map
+            \begin{equation*}
+                \mqty[f & s & g] \colon \cyl C \to D.
+            \end{equation*}
+        \end{claim*}
+
+        \begin{proof}
+            The chain maps $f$ and $g$ are chain homotopic if and only if there exists a sequence $\set{H_i}_{i \in \Z}$ of group homomorphisms
+        \begin{equation*}
+            \set{C_{i} \xrightarrow{H_i} D_{i+1}}_{i\in \Z}
+        \end{equation*}
+            such that, for each $i \in \Z$, and each chain $c \in C_i$, the pair of homomorphisms $H_{i+1}$ and $H_{i}$ satisfy the homotopy condition
+        \begin{equation*}
+            \paren{f_i- g_i}(c) = \paren{d_{i} H_{i-1} - H_{i} d_{i-1}}(c).
+        \end{equation*}
+
+        \end{proof}
+      \label{hocondition}
+   \end{equation}
+   which is an equality of chains in $\paren{\sich * X \otimes \sich * X}_n$.
+
+\end{enumerate}
+
+\end{document}
