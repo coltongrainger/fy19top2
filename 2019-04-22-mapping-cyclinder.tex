@@ -9,14 +9,15 @@
 
 \maketitle
 
+We work in the category $\cat{Ch}$ of \term{chain complexes} of \term{graded abelian groups}. 
+
 \begin{enumerate}
 
         \newcommand{\cyl}[1]{\mathrm{cyl}\paren{#1}} 
 
-    \item We work in the category $\cat{Ch}$ of chain complexes of abelian groups. 
-        For a given chain complex $C$, let $\cyl C$ denote the mapping cylinder of the identity map on $\cyl C$. 
-        
-        Explicitly, if $C$ is described by the level-wise groups and differentials
+    \item For a given chain complex $C$, let $\cyl C$ denote the \term{mapping cylinder of the identity map} on $\id \colon C \to C$. 
+        To be explicit, \emph{what is $\cyl C$?} 
+        Well, if $C$ is described by the level-wise groups and differentials
         \begin{equation*}
             C = \set{C_{i+1} \xrightarrow{d_{i+1}} C_{i}}_{i\in \Z}
         \end{equation*}
@@ -24,40 +25,113 @@
         \begin{equation*}
             \cyl C = \set{ \xymatrix{ C_i \ar[r]^{d_i} & C_{i-1} \\
                         C_{i-1} \ar[r]^{-d_{i-1}} \ar[ru]^{\id} \ar[rd]^{-\id} & C_{i-2} \\
-                         C_i \ar[r]^{d_i} & C_{i-1} } : \qq{where $\id \colon C \to C$ is the identity}}.
+                         C_i \ar[r]^{d_i} & C_{i-1} } : \qq{where $\id \colon C \to C$ is the identity}},
         \end{equation*}
-        Each level of $\cyl C$ is the direct product of groups, $C_i \oplus C_{i-1} \oplus C_i$, 
+        where each level-wise group $(\cyl C)_i$ is the direct product of groups, $C_i \oplus C_{i-1} \oplus C_i$, 
         and the arrows indicate how elements of one component group are mapped into a component group of the next degree lower in the chain complex $\cyl C$.
-        
-        Writing the level-wise groups as column vectors and the differential $\partial$ of $\cyl C$ as a matrix is perhaps elucidating:
+        Writing the level-wise groups as column vectors and the differential $\partial$ of $\cyl C$ as a matrix is elucidating, and will be helpful for computation.
         \begin{equation*}
             \mqty[d & \id & 0\\ 0 & -d & 0\\ 0 & -\id & d] \colon \mqty[C_i\\C_{i-1}\\C_i]  \mapsto \mqty[C_{i-1}\\C_{i-2}\\C_{i-1}].
         \end{equation*}
 
-        Now, say that $D$ is another chain complex, that is the codomain of two chain maps $f, g \colon C \to D$.  
+        Now, say that $D$ is another chain complex that's the codomain of two chain maps $f, g \colon C \to D$.  
+
         \begin{claim*}[Extending chain maps to a mapping cylinder]
             \label{extending_chain_maps_to_a_mapping_cylinder}
             Two chain maps $f, g \colon C \to D$ are chain homotopic if and only if they extend to a map
             \begin{equation*}
-                \mqty[f & s & g] \colon \cyl C \to D.
+                \mqty[f & \mathcal{S} & g] \colon \cyl C \to D,
             \end{equation*}
+            where $\mathcal{S} \colon C \to D$ is (\emph{not a chain map}, but) a sequence of level-wise sections of homological degree $+1$
+            \[
+            \xymatrix@=0.7em{
+                \vdots \ar[d]          &  & \vdots \ar[d] \\
+                C_{i+1} \ar[ur]^{s_i} \ar[d] &  & D_{i+1} \ar[d]
+                C_{i} \ar[ur]^{s_{i-1}} \ar[d]   &  & D_{i} \ar[d] \\
+                C_{i-1} \ar[ur]^{s_{i-2}} \ar[d] &  & D_{i} \ar[d]\\
+                \vdots                 &  & \vdots }.
+            \]
         \end{claim*}
 
         \begin{proof}
-            The chain maps $f$ and $g$ are chain homotopic if and only if there exists a sequence $\set{H_i}_{i \in \Z}$ of group homomorphisms
-        \begin{equation*}
-            \set{C_{i} \xrightarrow{H_i} D_{i+1}}_{i\in \Z}
-        \end{equation*}
-            such that, for each $i \in \Z$, and each chain $c \in C_i$, the pair of homomorphisms $H_{i+1}$ and $H_{i}$ satisfy the homotopy condition
-        \begin{equation*}
-            \paren{f_i- g_i}(c) = \paren{d_{i} H_{i-1} - H_{i} d_{i-1}}(c).
-        \end{equation*}
+            By definition, the chain maps $f$ and $g$ are chain homotopic if there exists a sequence $\set{H_i}_{i \in \Z}$ of group homomorphisms
+            \begin{equation*}
+                \set{C_{i} \xrightarrow{H_i} D_{i+1}}_{i\in \Z}
+            \end{equation*}
+            such that, for each $i \in \Z$, and each chain $c \in C_i$, the homomorphisms $H_{i+1}$ and $H_{i}$ satisfy the homotopy condition
+            \begin{equation}
+                \label{homotopycondition}
+                \paren{f_i- g_i}(c) = \paren{d_{i} H_{i-1} - H_{i} d_{i-1}}(c).
+            \end{equation}
+            
+            On the other hand, $\mqty[f & \mathcal{S} & g]$ is a chain map if the following diagram commutes:
+            \begin{equation}
+                \label{chaincondition}
+            \begin{gathered}\xymatrix@=1em{%
+                    (\cyl C)_i \ar[dd]^{\mqty[f & \mathcal{S} & g]} \ar[rr]^d 
+                        &  
+                        & (\cyl C)_{i-1} \ar[dd]^{\mqty[f & \mathcal{S} & g]} \\
+                        & & \\
+                    D_i \ar[rr]^d 
+                        & 
+                        & D_{i-1}
+                }
+            \end{gathered}
+            \end{equation}
+            
+            The composition $(\cyl C)_i \to (\cyl C)_{i-1} \to D_{i-1}$ along the upper right corner is computed
+            \begin{equation*}
+                \mqty[f & \mathcal{S} & g]
+                \mqty[d & \id & 0\\ 0 & -d & 0\\ 0 & -\id & d]             
+                    = \mqty[fd & f - sd - g  & gd],
+            \end{equation*}
+            whereas the composition $(\cyl C)_i \to D_i \to D_{i-1}$ along the lower left corner is computed
+            \begin{equation*}
+                \mqty[d] \mqty[f & \mathcal{S} & g]
+                    = \mqty[df & ds & dg].
+            \end{equation*}
 
+            Now $df = fd$ and $dg = gd$ by our assumption that $f, g \colon C \to D$ are chain maps. 
+            Hence, the following are equivalent.
+            \begin{enumerate}
+                \item $f, g \colon C \to D$ extends to a chain map $\mqty[f & \mathcal{S} & g] \colon \cyl C \to D$ from the cylinder on $C$.
+                \item The diagram \ref{chaincondition} commutes.
+                \item For each $i$, the maps $(\cyl(C))_i$ to $D_i$ on the upper right and lower left of \ref{chaincondition} are equal.
+                \item For each $i$, the maps%
+                    \footnote{%
+                        Please mind the indices. Recall that the center component of $(\cyl(C))_i$ is $C_{i-1}$, hence our maps are shifted down by $1$ degree from what one might expect.
+                    } $f_{i-1} - s_{i-2}d_{i-1} - g_{i-1} = d_{i}s_{i-1}$ from the center component of $(\cyl(C))_i$ to $D_{i-1}$ are equal.
+                \item For each $i$, the levelwise maps satisfy $f - g = ds + sd$.
+                \item $\mathcal{S}$ is a chain homotopy between $f, g \colon C \to D$.
+            \end{enumerate}
         \end{proof}
-      \label{hocondition}
-   \end{equation}
-   which is an equality of chains in $\paren{\sich * X \otimes \sich * X}_n$.
 
+        \item  Let $A$ and $B$ be chain complexes.
+            Define the \term{tensor chain complex} $A \otimes B$ as the graded abelian group
+            \begin{equation*}
+                (A \otimes B)_n := \bigoplus_{i + j =n} A_i \otimes B_j
+            \end{equation*}
+            with differential
+            \begin{equation*}
+                \partial\paren{a \otimes b} := d_i^A(a) \otimes b + (-1)^i a \otimes d^B_j(b)
+            \end{equation*}
+            for each $i$-chain $a$ and each $j$-chain $b$ in $A_i$ and $B_j$, respectively.
+
+            \begin{enumerate}
+                \item $A \otimes B$ with the alternative face map $\partial$ is a chain complex.
+                    \begin{proof}
+                        
+                \partial^2\paren{a \otimes b} 
+                        = \partial\paren{d_i^A(a) \otimes b + (-1)^i a \otimes d^B_j(b)}
+                        = \partial\paren{d_i^A(a) \otimes b} + (-1)^i \partial\paren{a \otimes d^B_j(b)}
+                        = d_{i-1}^A d_i^A(a) \otimes b + (-1)^{i-1} d_i^A(a) \otimes d^B_{j-1}(b)
+                        + (-1)^{i}\paren{d_{i-1}^A(a) \otimes d^B_j(b) + (-1)^{i-1} a \otimes d^B_{j-1}d^B_j(b)
+                    \end{proof}
+                \item For the chain complex $I$ defined by 
+                    $I_0 = \Z\{\ell_0, \ell_1\}$, $I_1 = \Z\{\ell\}$, and $I_i = 0$ for $i < 0$ or $i >1$,
+                    with differential $d_1(\ell) = \ell_1 - \ell_0$,
+                    $\cyl C \cong I \otimes C$.
+            \end{enumerate}
 \end{enumerate}
 
 \end{document}
