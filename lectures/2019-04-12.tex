@@ -1,158 +1,195 @@
-\textsc{Announced!} In the fall semester, we'll run a reading course on an introduction to chromatic homotopy theory. We'll start from basics---the "homotopy category" and fibrations.
+\begin{quote}
+\textit{%
+    ``We'll have a reading course in the Fall to introduce stable/chromatic homotopy theory.''
+}
+\end{quote}
 
-Today $\Lambda$ is a commutative unital ring. 
+Today, $\Lambda$ is a commutative unital ring. We'll aim to define the cross product and cup product on cohomology.
+% this particular day is fraught with BAD typos 
+% especially given the sign conventions
+% https://mathoverflow.net/questions/53315/references-for-sign-conventions-in-homological-algebra
 
-\begin{comp}{claim}[Properties]{enumerate}
-    \item We have a sign convention for the maps of cohomological\footnote{or, dually, the homological degree of $\Hom(A_*, B_*)_{-p}$.} degree $p$
-    \[\Hom(A_*, B_*)^p = \{f_i \colon A_i \to B_{i-p}\}.\]
-    That is, if $f$ has cohomological degree $p$, then the chain map looks like
-    \[\xymatrix@=0.7em{
-        A_{i+1} \ar[r] \ar[d] & B_{i+1-p}\\
-        A_{i} \ar[r] \ar[d] & B_{i-p}\\
-        A_{i-1} \ar[r]  & B_{i-1-p}}.\]
-    \item $\Hom(A_*, B_*)^p$ is a chain complex with differential 
-    \[(\delta f) (a) = \partial (f(a)) - (-1)^{\deg f} f(\partial (a)).\]
-    \item Consider the (chain map) element $f \in \Hom(A_*, B_*)$. Then $f$ is a cocycle if and only if $f$ has cohomological degree $0$.
-    \item Consider the chain complex concentrated at degree $0$.
-    \[G_* = \{0 \qq{ not in degree $0$ else $G$}\}.\]
-    With our sign conventions, the degree of each (chain map) element $f \in  \in \Hom(A_p, G)$ is $(-1)^{\deg f + 1}$. 
-    Therefore $\Hom(A_*, G)$  is a chain complex with differential $\delta f = (-1)^{\deg f + 1} f \partial$.
-\end{comp}
-
-\begin{note}[]
-    Keep in mind that the resolution $F_*(G) \to G$ (for $G$ a finitely generated abelian group) induces a chain map.
-    $$\xymatrix{
-        0 \ar[r] \ar[d] & F_1 \ar[r] \ar[d]  & F_0 \ar[r] \ar[d] & 0 \ar[d] \\
-        0  \ar[r] &  0 \ar[r] &  G \ar[r] & 0 }.$$
-\end{note}
-
-To handle products (especially products of CW-complexes) in singular homology, we proved there exists a natural bilinear map $\times$ (the cross product) from the product of two singular chain complexes to the chain complex of the product of two spaces. 
-With $\times$, computed the boundary map of the chain complex ${\Delta}_{*}\paren{X \times Y}$ in  ${\Delta}_{*}\paren{X} \times {\Delta}_{*}\paren{Y}$, incidence degree. 
-Taking the interval $I = Y$ or an interval $I$ gave us a proof of the homotopy axiom.Now we would like to compose the definitionsincidence degrees
-We computed the homology of 
-\begin{defn}[]
-    $\times$ product extend the cross product
-        $$\times \colon \Delta^p (X; \Lambda) \otimes \Delta^q (Y; \Lambda) \to \Delta^{p+q}(X\times Y; \Lambda)$$ 
-    for (the cochains) $f, g \colon \Delta_p (X) \to \Lambda$ 
-        $$f \otimes g \colon \Delta_p(X) \otimes \Delta_q(Y) \to \Lambda \otimes \Lambda.$$
-    But we can also map 
-        $$\Lambda \otimes \Lambda \xrightarrow{m} \Lambda$$ 
-    so that $\sigma \otimes \tau \mapsto f(\sigma) \otimes g(\tau) \mapsto f(\sigma) g(\tau)$.
+\begin{defn}[Internal hom of chain complexes, Schreiber]
+    \label{defn:internal_hom}
+    Let $A$ and $B$ be chain complexes.
+    Define a chain complex $\bkt{A,B}$ to have components
+    \begin{equation*}
+        [A,B]_n := \prod_{i \in \Z} \Hom_{\Mod}(A_i, B_{i+n})
+    \end{equation*}
+    (the collection of \term{homological degree}-$n$ maps between the underlying graded modules) 
+    and whose differential is defined on homogeneously graded elements 
+    $f \in [A,B]_n$ by
+    \[\delta f = \partial_B f - (-1)^{n} f \partial_A.\]
+        % This is Urs Schreiber's definition 2.63 at \url{https://ncatlab.org/schreiber/show/Introduction+to+Homological+Algebra#ChapterOnChainComplexes}.
+    This complex is variously denoted 
+    \[[A,B]_n = \Hom(A_\bullet, B_\bullet)_n  = \mathrm{hom}(A, B) = \{f_i \colon A_i \to B_{i+n}\}_{i \in \Z}.\]
+    (Dually, maps of \term{cohomological degree}-$n$ belong to the chain complex $[A, B]_{-n} = [A, B]^{n}$.
+    Note the differential $\delta f$ is well defined regardless of whether we're working with homological or cohomological degree.)
 \end{defn}
 
-Recall from the Eilenberg-Zilber theorem (which is only hard for singular chain complexes generated on spaces), there's a map $\Theta \colon \Delta_*(X \times Y) \to \Delta_*(X) \otimes \Delta_*(Y)$ for which we have the chain homotopies $\Theta \circ \times \sim \id$ and $\times \circ \theta \sim \id$. 
-Define
-    $$f \times g = f\otimes g \circ \Theta.$$
+\begin{quote}
+\textit{%
+    ``One algebraic way to motivate this is to observe that the signs in the differential for the Hom are precisely what is needed for 0-cycles in the $\hom(A,B)$ complex to be the set of morphisms of complexes $A\to B$ (and also, that the 0th homology group $H_0(\hom(A,B))$ is the set of homotopy classes of morphisms $A\to B$). This is quite great. Once you decide you want this, all the other signs you mention follow because you need various things to hold. For example, you want the adjunction between $\hom$ and $\otimes$ to hold for the internal versions, so this forces you to add signs to the $\otimes$, and so on.'' --Mariano Suárez-Álvarez, \url{https://math.stackexchange.com/questions/40468/}
+}
+\end{quote}
+
+\begin{todo}[Internal hom is a functor, Schreiber]
+    \label{todo:internal_hom}
+    \hfill
+    \begin{enumerate}
+        \item Verify $[\bl,\bl] \colon \Ch \times \Ch \to \Ch$ is the internal hom functor on $\Ch$.
+        \item Verify a map $f \in [A,B]$ of homological degree $0$ is a cycle if and only if $f$ is a chain map.
+        \item Verify a map $h \in [A,B]$ of homological degree $1$ such that $\delta h = f - g$ is a chain homotopy from $g$ to $f$.
+        \item Verify ${H}_{0}\paren{[A,B]}$ is the group of homotopy-equivalence classes of chain maps in $[A,B]_0$.
+    \end{enumerate}
+\end{todo}
+
+\begin{quote}
+\textit{%
+    ``If one thinks of chain complexes as algebraic analogues of topological spaces and internal hom as an algebraic analogue of the internal hom in a nice category of topological spaces, then 0-cycles are analogues of points and 1-cycles are analogues of homotopies between points, so a 0-cycle in the internal hom is a continuous map and a 0-cycle up to boundaries is a homotopy class of continuous maps.'' --Qiaochu Yuan, \url{math.stackexchange.com/questions/40468/}
+}
+\end{quote}
+
+\begin{coro}
+    Say $G$ is a chain complex concentrated at degree $0$. Then the cohomological degree of \[f \colon A_p \to G_0\] is $p$.
+    Since $\partial_G = 0$ (because it maps out of the concentration in degree $0$), we see that the chain complex $[A, G]$  has differential $\delta f = (-1)^{\deg f + 1} f \partial_A$.
+\end{coro}
+
+\begin{note}[Concentrated complexes and flat resolutions]
+    For any PID $R$ and finitely generated $M \in \cat{RMod}$, the finite flat resolution $F_\bullet(M)$ of $M$ is quasi isomorphic to the complex $M$ concentrated in degree $0$:
+    \begin{equation*}
+        \begin{gathered}
+            \xymatrix@C=1em{
+                \cdots \ar[r] & 0 \ar[r] \ar[d] & F_1 \ar[r] \ar[d] & F_0 \ar[d] \\
+                \cdots \ar[r] & 0 \ar[r]        & 0 \ar[r]          & M
+            }
+        \end{gathered}
+        \qq{is quasi-isomorphic if and only if}
+        \begin{gathered}
+            \xymatrix@C=1em{
+                0\ar[r] & F_0 \ar[r] & F_1 \ar[r] & M \ar[r] & 0
+            }
+        \end{gathered}
+        \qq{is exact.}
+    \end{equation*}
+\end{note}
+
+To handle products (especially products of CW-complexes) in singular homology,
+we proved there exists a natural bilinear map $\times$ (the cross product)
+from the product of two singular chain complexes to the chain complex of the
+product of two spaces. With $\times$, we computed the boundary map of the chain
+complex ${\Delta}_{*}\paren{X \times Y}$ using ${\Delta}_{*}\paren{X} \times {\Delta}_{*}\paren{Y}$ 
+and the \term{degree of incidence} between $n$ and $n-1$ cells. 
+Then, taking the interval $I = Y$ as the second space gave proof that (CW homology, and thus) singular homology satisfied the homotopy axiom.
+
+Now we seek to define the cross product $\times$ on cochain complexes. (\TODO\ Motivate.) Consider the cochains $f\colon \Delta_p (X) \to \Lambda$ and $g \colon {\Delta}_{q}\paren{X} \to \Lambda$. There's a map induced by the ring structure
+\[f \otimes g \colon \Delta_p(X) \otimes \Delta_q(Y) \to \Lambda \otimes \Lambda.\]
+The tensor product is over $\Lambda$, so multiplication $\Lambda \otimes \Lambda \xrightarrow{m} \Lambda$ gives an isomorphism. Composing the previous two maps, for any $p$- and $q$-simplices $\sigma$ and $\tau$,
+\[\sigma \otimes \tau \mapsto f(\sigma) \otimes g(\tau) \mapsto f(\sigma) g(\tau).\] 
+
+Recall also, from the Eilenberg-Zilber theorem, there's a natural chain equivalence $\theta \colon \Delta_*(X \times Y) \to \Delta_*(X) \otimes \Delta_*(Y)$. (The content of this theorem was in constructing a chain homotopies $\theta \circ \times \simeq \id$).
+
+\begin{defn}[Cross product on cochain complexes]
+Define the cross product
+\[\times \colon \Delta^p (X; \Lambda) \otimes \Delta^q (Y; \Lambda) \to \Delta^{p+q}(X\times Y; \Lambda),\]
+by the rule
+\[f \times g = f\otimes g \circ \theta.\]
+\end{defn}
 
 \begin{rem}[]
-    Yu asked how $$\Theta \colon \Delta_p(X\times Y; \Lambda) \to (\Delta_*(x) \otimes \Delta_*(Y))_p$$ could be well defined.
-    
-    Fix $f \colon \Delta_p(X) \to \Lambda$, then extend to all of $\Delta_*(X)$ by varying $p$. \TODO.
+    Yu asked how 
+    \[\theta \colon \Delta_p(X\times Y; \Lambda) \to (\Delta_*(X) \otimes \Delta_*(Y))_p\] 
+    could be well defined. 
+    \TODO\ Write $f \colon \Delta_p(X) \to \Lambda$, then extend to all of $\Delta_*(X)$ (by varying $p$?).
 \end{rem}
 
 \begin{lem}[]
-    $\delta (f \times g)  = \delta f \times g + (-1)^{\deg f} f \times \delta g$.
+$\delta (f \times g)  = \delta f \times g + (-1)^{\deg f} f \times \delta g$.
 \end{lem}
 
 \begin{proof}
-\TODO\ (acyclic models).
+Acyclic models.
 \end{proof}
 
-\begin{fact}[]
-There's a natural (linear map out of the) product of homology groups
-     $$\times \colon H^p(X; \Lambda) \otimes H^q(Y; \Lambda) 
-         \to H^{p+q}(X \times Y; \Lambda)$$
-such that 
-     $$f \otimes g \mapsto f \times g,$$
-which is induced by
-$$\xymatrix{
-    \Delta_*(X \times Y) \ar[r]^\Theta &
-        \Delta_*(X) \otimes \Delta_*(Y) \ar[r]^{f\otimes g} &
-        \Lambda
-}.$$
-\end{fact}
+\begin{prop}
+    \label{crossproductoncohomology}
+    There's a natural (linear map out of the) product of homology groups
+        \[\times \colon H^p(X; \Lambda) \otimes H^q(Y; \Lambda) 
+            \to H^{p+q}(X \times Y; \Lambda)\]
+    such that 
+        \[[f] \otimes [g] \mapsto [f] \times [g],\]
+    which is induced by
+        \[\xymatrix{\Delta_*(X \times Y) \ar[r]^-\theta &
+            \Delta_*(X) \otimes \Delta_*(Y) \ar[r]^-{f\otimes g} &
+            \Lambda
+        }.\]
+\end{prop}
 
 \begin{proof}
-Let the unit $1 \in H^0(X; \ZZ)$ be the class of the augmentation $\epsilon \colon \Delta_0(X) \to\ZZ$.
+Let the unit $1 \in H^0(X; \Z)$ be the class of the augmentation $\epsilon \colon \Delta_0(X) \to\Z$. We appeal to the universal property of the product space $X \times Y$. The component projections induce chain maps on the cochain complexes.
+\begin{equation*}
+    \begin{gathered}
+        \xymatrix{
+        X\times Y \ar[dr]_{\pi_Y} \ar[r]^{\pi_X} & X \\
+        & Y 
+        }
+    \end{gathered}
+    \quad
+    \overset{\Delta^*(\bl)}{\rightsquigarrow}
+    \begin{gathered}
+        \xymatrix{
+        {\Delta}^{*}\paren{X \times Y} & {\Delta}^{*}\paren{X}  \ar[l]_{\pi^*_X} \\
+        & {\Delta}^{*}\paren{Y}  \ar[ul]^{\pi^*_Y}
+        }
+    \end{gathered}
+\end{equation*}
+    I claim that the maps $\pi^*_X$ and $\pi^*_Y$ descend to cohomology, i.e., that there're well-defined homomorphisms $H^*(X) \to H^*(X \times Y)$ sending $\alpha$ under $\pi^*_X$ to $\alpha \times 1$ and symmetrically $H^*(Y) \to {H}_{*}\paren{X\times Y}$ sending $\beta \mapsto 1 \times \beta$.
 
-The universal property of the product space $X \times Y$ is expressed by the projections
-$$\xymatrix@=0.7em{
-    X\times Y \ar[dr]^{\pi_Y} \ar[r]^{\pi_X} & X \\
-    & Y 
-}$$
-which induce cochain maps 
-$$\xymatrix@=0.7em{
-   {\Delta}_{*}\paren{X \times Y} & {\Delta}^{*}\paren{X}  \ar[l]^{\pi^*_X} \\
-                                  & {\Delta}^{*}\paren{Y}  \ar[ul]^{\pi^*_Y}
-}$$
-I claim that these cochain maps descend to cohomology. 
-Explicitly, there' a homomorphism $H^*(X) \to H^*(X \times Y)$ pulling back $\alpha$ over $\pi^*_X$ to $\alpha \times 1$. By symmetric argument, $\beta \mapsto 1 \times \beta$.
-
-Consider the "slice map" (\TODO\ Are these over categories?)
-$$\xymatrix@=0.7em{
-    \Delta_p (X) \otimes \Delta_0(X) \ar[r]^{\times} &
-        \Delta_p(X \times Y) \ar[r]^{{\pi_X}_\Delta} &
+To see this, consider the ``slice map" %(\TODO\ are these over categories?)
+\begin{equation*}
+    \xymatrix@=0.7em{
+        \Delta_p (X) \otimes \Delta_0(Y) \ar[r]^{\times} &
+        \Delta_p(X \times Y) \ar[r]^-{{\pi_X}_\Delta} &
         \Delta_p(X) \\
-    \tau \otimes y \ar@{|->}[r]                      &
-    (\tau \times y)(x) = (\tau(z), y) \ar@{|->} [r]  &
-    \tau
-}$$
-
-\TODO\ Once extended linearly, we have a map on chains, therefore an induced map.
+        \tau \otimes y \ar@{|->}[r]                      &
+        (\tau \times y)(x) = (\tau(z), y) \ar@{|->} [r]  &
+        \tau
+    }
+\end{equation*}
+Extend the slice map linearly to a map on chains, then obtain an induced map on cochains.
 \end{proof}
 
-\begin{ex}[]
+\begin{ex}[The twist map]
 \label{twist}
-    How can we compare $\alpha \times \beta \in H^*(X\times Y; \Lambda)$ to $\beta \times \alpha \in H^*(Y\times X; \Lambda)$? There's a twist map $T \colon X \times Y \to Y \times X$ taking $(\alpha, \beta) \mapsto (\beta, \alpha)$, which induces a map on cohomology 
-    \begin{equation*}
-        \xymatrix{H^*(X\times Y; \Lambda) & \ar[l]^{T^*} H^*(Y\times X; \Lambda)}.
-    \end{equation*}
+How can we compare $\alpha \times \beta \in H^*(X\times Y; \Lambda)$ to $\beta \times \alpha \in H^*(Y\times X; \Lambda)$? 
+
+Consider the twist map $T \colon X \times Y \to Y \times X$ taking $(\alpha, \beta) \mapsto (\beta, \alpha)$, which induces a map on cohomology.
+\begin{equation*}
+\xymatrix{H^*(X\times Y; \Lambda) & \ar[l]^{T^*} H^*(Y\times X; \Lambda)}.
+\end{equation*}
 \end{ex}
 
+If $X = Y$, we apply proposition \ref{crossproductoncohomology} and pull back the diagonal map $d \colon X \to X \times X$ (where $x \mapsto (x,x)$) to obtain the cup product. 
+
+\begin{defn}[Cup product]
+    \label{defn:cup_product}
+    The \term{cup product} is the bilinear map
+    \begin{equation*}
+        \xymatrix@R=0.7em{
+            H^*(X; \Lambda) \otimes H^*(X; \Lambda)  \ar[r]^-{\times} & 
+            H^*(X\times X; \Lambda) \ar[r]^-{d^*} & 
+            H^*(X; \Lambda)\\
+            \alpha \otimes \beta \ar@{|->}[rr] & &
+            \alpha\smile\beta},
+    \end{equation*} 
+    given by the pullback of the diagonal map
+    \begin{equation*}
+        d^* \colon {H}^{*}\paren{X \times X}\to {H}^{*}\paren{X}
+    \end{equation*}
+    precomposed with the cross product $\times$.
+    (To compute the cup product on cochains $f^p$ and $g^q$ in ${\Delta}^{p}\paren{X}$ and ${\Delta}^{q}\paren{X}$, see definition \ref{cupproductoncochains}.)
+\end{defn}
+
 \begin{todo}[]
-From example \ref{twist}, prove that the cup product is a ``graded''-commutative operation.
+From example \ref{twist}, prove that the cup product is a graded-commutative operation.
 \end{todo}
-
-To define the cup product, we need the diagonal map $d \colon X \to X \times X$ such that $d(x) = (x,x)$. The induced map $d^*$ back on cohomology should be pre-composed with the map out of the tensor product. The later map (out the tensor product) exists by application of the Eilenberg-Zilber theorem.
-$$\xymatrix{
-    H^*(X; \Lambda) \otimes H^*(X; \Lambda)  \ar[r]^{\times} & 
-        H^*(X\times X; \Lambda) \ar[r]^{d^*} & 
-        H^*(X; \Lambda)\\
-    \alpha \otimes \beta \ar@{|->}[rr] & &
-        \alpha\text{"cup"}\beta}.$$ 
-
-Define $1 \in H^0(X; \ZZ)$ to be the class of $\epsilon \colon \Delta_0(X) \to\ZZ$.
-
-From the product
-$$\xymatrix{
-    X\times Y \ar[dr]^{\pi_Y} \ar[r]^{\pi_X} & 
-        X \\
-    & Y 
-}$$
-we have the induced map on $H^*(X) \to H^*(X \times Y)$ taking $\alpha$ under $\pi^*_X$ to $\alpha \times 1$ (similarly $\beta \mapsto 1 \times \beta$).
-
-In particular, consider the "slice map"
-$$\xymatrix{
-    \Delta_p (X) \otimes \Delta_0(X) \ar[r]^{\times} & 
-        \Delta_p(X \times Y) \ar[r]^{{\pi_X}_\Delta} & 
-        \Delta_p(X) \\
-    \tau \otimes y \ar@{|->}[r] &
-    (\tau \times y)(x) = (\tau(z), y) \ar@{|->} [r]& 
-    \tau
-}$$
-
-\TODO\ Once extended linearly, we have a map on chains, therefore an induced map.
-
-How can we compare $\alpha \times \beta \in H^*(X\times Y; \Lambda)$ to $\beta \times \alpha \in H^*(Y\times X; \Lambda)$?
-There's a twist map $T \colon X \times Y \to Y \times X$ taking $(\alpha, \beta) \mapsto (\beta, \alpha)$,
-which induces a map on cohomology
-$$\xymatrix{H^*(X\times Y; \Lambda) & \ar[l]^{T^*} H^*(Y\times X; \Lambda)}.$$
-*Note.* From this, one shows that the cup product is anti-commutative.
-
-To finally define the cup product, we need the diagonal map $d \colon X \to X \times X$ such that $d(x) = (x,x)$. The induced map $d^*$ back on cohomology along with the map from the tensor product into the product (given by Eilenberg-Zilber) allow one to string together (this magic of topological spaces):
-$$\xymatrix{
-    H^*(X; \Lambda) \otimes H^*(X; \Lambda)  \ar[r]^{\times} & 
-        H^*(X\times X; \Lambda) \ar[r]^{d^*} & 
-        H^*(X; \Lambda)\\
-    \alpha \otimes \beta \ar@{|->}[rr] & &
-        \alpha\text{"cup"}\beta}.$$ 

@@ -1,0 +1,132 @@
+In the last section of the course, for orientations and Poincaré duality, we'll make the lateral move to Peter May's Concise.
+
+Fix an $n \in \N$ today for the dimension of our topological manifolds. E.g., we work in $\Man^n$.
+
+\begin{rem}[Local excision]
+    \label{rem:local_excision}
+    Let $x \in U \subset M$ be a point of the manifold $M \in \Man^n$, with $U$ a chart domain. 
+    From an application of excision, the coordinate balls in $M$ have trivial homology groups:
+    \begin{equation*}
+        {H}_{i}\paren{M, M-x; G} \cong {H}_{i}\paren{U, U-x; G} \cong 
+        \begin{cases}
+            G & \text{if } i = n\\
+            0 & \text{else}.
+        \end{cases}
+    \end{equation*}
+    That is, for any $x \in U$, there's an isomorphism ${H}_{n}\paren{M, M \setminus U} \xrightarrow{\cong} {H}_{n}\paren{M, M-x}$.
+\end{rem}
+
+Fix coefficients over a commutative unital ring $\Lambda$.
+
+\begin{defn}[Fundamental class]
+    \label{defn:fundamental_class}
+    A \term{fundamental class} of $M$ at $X \subset M$ is a class $z \in {H}_{n}\paren{M, M \setminus X; \Lambda}$ such that the image of $z$ in 
+    ${H}_{n}\paren{M, M-x; \Lambda}$ is a generator for all $x \in X$.
+    \begin{align*}
+        j_{x, X} \colon {H}_{n}\paren{M, M\setminus X}
+        &\to {H}_{n}\paren{M, M-x} \cong \Lambda \\
+        z  &\overset{j_{x, X}}{\mapsto} j_{x, :} (z)\text{ which needs to be a unit in $\Lambda$.}
+    \end{align*}
+\end{defn}
+
+\begin{note}[]
+   Observe that the fundamental class at $X$ doesn't necessarily exist, but if $U$ is a ``fundamental" open set, then this class \emph{always} exists.
+\end{note}
+
+\begin{defn}[Orientation (May)]
+    \label{defn:orientation_may_}
+    An $\Lambda$-orientation is an open cover $\set{U_i}$ of $M$ with fundamental classes $z_i$ of $M$ at $U_i$ 
+    \begin{equation*}
+        z_i \in {H}_{i}\paren{M, M\setminus U_i; \Lambda}
+    \end{equation*}
+    such that $z_i$ and $z_j$ map to the same class in the intersected "local homology"
+    \begin{equation*}
+       {H}_{i}\paren{M, M\setminus (\underset{\text{nonempty}}{U_i \cap U_j}); \Lambda}
+    \end{equation*}
+    (Note that the small neighborhood $U_i \cap U_j$ is more susceptible to \emph{receive} induced homology maps than are either of the larger open neighborhoods $U_i$ or $U_j$.) 
+\end{defn}
+
+Here's a differential geometric interpretation. Pick a frame in some $n$-manifold over some point $a \in M$. Consider the set $S_a$ of all frames over points $b$ such that there's a continuous path from $a$ to $b$ in $M$. Either, for some homotopy class of paths in $M$ that return to $a$, there exist frames in $S_a$ whose determinant differs by $-1$, or no such homotopy class of paths exists. In the later case, $M$ is orientable. \emph{It's an $n$-finger rule!} 
+
+\begin{ex}[Orientation double cover]
+    \label{ex:orientation_double_cover}
+    Suppose now that the coefficient ring is $\Z$. Define the \term{orientation double cover of $M$} to be the set of pairs
+    \begin{equation*}
+        \tilde{M}_{\Z} = \set{(x,a): x \in M, a \in {H}_{n}\paren{M, M-x}}
+    \end{equation*} 
+    En masse, say we have an open cover $\mathcal{U}$ of $M$. 
+    For each open set $U \subset M$, we need to define a \term{topology basis} for the orientation bundle $\tilde{m}$. 
+    But for $U$ in the open cover $\mathcal{U}$, there's a fundamental class $a \in {H}_{n}\paren{M, M\setminus U}$. 
+    So take a open set $U_a \subset \tilde{M}$ (thought of as the open set $U \subset M$ ``evaluated'' at the class $a$) defined by
+    \begin{equation*}
+        U_a = \{(x,b) \in \tilde{M} : x \in U, b = j_{x,U}(a)\}
+    \end{equation*}
+    as a basis element for the topology of the orientation bundle $\tilde{M}$.
+\end{ex}
+
+\begin{prop}[The orientation bundle is a double cover]
+    \label{prop:the_orientation_bundle_is_a_double_cover}
+     As defined in \ref{ex:orientation_double_cover}, the projection from the bundle $\tilde{M} \surj M$ such that $(x,a) \mapsto x$ is a double cover. (It's a trivial, path disconnected, double cover if $M$ is orientable; it's \emph{always} a double cover.)
+\end{prop}
+
+\begin{proof}
+    \TODO. Here's the sketch: consider the lift of an open set $U \subset M$. Then $p^{-1}(U)$ should be isomorphic to the group of units ($\Z/(2)$) of the local homology. We want to establish the double cover on $U$.
+    \begin{equation*}
+    \begin{gathered}\xymatrix@=1em{%
+            p^{-1}(U)\ar[dr] & \ar[l] U \times  \Z^\times \ar[d]\\
+            & U
+        }
+    \end{gathered}
+    \end{equation*}
+\end{proof}
+
+\begin{defn}[Orientation (Bredon)]
+    \label{defn:orientation_bredon_}
+    Let $X \subset M$ be any subset of the manifold $M$. Let $\tilde{M}$ be the orientation bundle. Then \term{an orientation of $M$ along $X$} is a continuous section 
+    $X \xrightarrow{s} \tilde{M} \xrightarrow{p} M$ with $p \circ s = \id$.
+\end{defn}
+
+\begin{todo}[$SU(2)$ is a cover of $SO(3)$]
+    \label{todo:_su_2_is_a_cover_of_so_3_}
+    Show that either $SU(2)$ is or is not an orientation bundle of $S0(3)$. 
+\end{todo}
+
+\begin{prop}[Sufficient conditions for orientability]
+    \label{prop:sufficient_conditions_for_orientability}
+    Let $M$ be a connected $n$-manifold. \TFAE.
+    \begin{enumerate}
+        \item $M$ is orientable.
+            \item $M$ is orientable along any compact subset. 
+            \item $\tilde{M}$ is a trivial double cover, and $\tilde{M} \cong M \sqcup M$.
+    \end{enumerate}
+\end{prop}
+
+Note the two definitions are almost equivalent, but the former definition was a bit too \emph{raw}, as in, May gave us an actual bundle, not an equivalence class of bundles.
+
+\begin{proof}
+    1 implies 2. Consider the definition of continuous sections, then march along any compact subset (get a Lebesgue cover).
+    2 implies 3. Assume also that $\tilde{M}$ is connected. Let $x \in M$.  Let $\sigma \colon \bkt{0,1} \to \tilde{M}$ be a path, starting at $(x,a)$ and ending at $(x,-a)$. Then project $\sigma(\bkt{0,1})$ down to $M$. Consider that $p\sigma (\bkt{0,1}) \subset M$ is compact, so by (2) there's a section $s \colon p\sigma (\bkt{0,1}) \to \tilde{M}$ along the image of the path.
+    \begin{equation*}
+    \begin{gathered}\xymatrix{%
+            & \tilde{M}\\
+        \bkt{0,1} \ar[ur]^\sigma \ar[r]_{p\sigma} & M \ar[u]^s
+        }
+        %TODO
+    \end{gathered}
+    \end{equation*}
+    3 implies 1. If there's a trivial double cover of $M$, then it's easy (since the projection is a local homeomorphism) to obtain a continuous section from $M$ back into the orientation bundle $\tilde{M}$.
+\end{proof}
+
+\begin{prop}[$\Z/2$ orientation]
+    \label{prop:modulo_z_2_orientation}
+    Let the ring of coefficients $\Lambda = \Z/(2)$. (\TODO, is this true for \term{any $2$-torsion} ring?)
+    Running the same argument as in the proof of \ref{prop:sufficient_conditions_for_orientability}, the projection from $\tilde{M}_{\Z}$ to $M$ induces a projection from the $\Z/(2)$ orientation bundle. TFDC:
+    \begin{equation*}
+    \begin{gathered}\xymatrix@=1em{%
+            \tilde{M}_{\Z} \ar[rr] \ar[rd] &  & \ar[dl] \tilde{M}_{\Z/2}\\
+            & M &
+        }
+    \end{gathered}
+    \end{equation*}
+    It follows that $\tilde{M}_{\Z/2} \cong M \sqcup M$, so that $M$ is orientable $\mod{2}$.
+\end{prop}

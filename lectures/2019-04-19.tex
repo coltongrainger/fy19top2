@@ -1,0 +1,133 @@
+\begin{quote}
+    \textit{
+    ``À bas Euclide! Mort aux triangles!%
+    \footnote{%
+        Jean Dieudonné, keynote address at the Royaumont Seminar (1959)
+    } 
+    [Down with Euclid! Death to triangles!]''
+    }
+\end{quote}
+
+Today, we'll define the cap product and sketch Poincaré duality for (nice) topological manifolds. Let $X \in \Top$. To reference the degrees of cochains in ${\Delta}^{p}\paren{X}$ and chains in ${\Delta}_{q}\paren{X}$ let $p, n$ be nonnegative integers with $q = n-p$. We'll regard a $p$-cochain $f$ to ``be defined but equal to zero on $i$-simplices when $i \neq p$''. (So for $c \in \Delta_i(X)$, $f(c) = 0$ if $i \neq p$.) 
+
+\begin{defn}[The cap product on cochains and chains]
+    Suppose $f \in \Delta^p(X; \Lambda)$ and $c \in \Delta_n(X)$. The \term{cap product} on the chain--cochain level is the linear map
+        \begin{align*}
+            \cap \colon \Delta^p(X) \otimes \Delta_n(X) &\to \Delta_{n-p = q}(X)\\
+                f \otimes c &\overset{\cap}{\mapsto} f \cap c := (1 \otimes f) \Delta c
+        \end{align*}
+    where $\Delta \colon {\Delta}_{*}\paren{X} \to {\Delta}_{*}\paren{X} \otimes {\Delta}_{*}\paren{X}$ is some diagonal approximation.
+\end{defn}
+
+As a consequence, if $\Delta$ is the Alexander--Whitney diagonal approximation and $\sigma$ is an $n$-simplex in ${\Delta}_{n}\paren{X}$, then 
+\begin{align*}
+    f \cap \sigma 
+        &= (1 \otimes f) \Delta \sigma \\
+        &= (1 \otimes f) \sum\limits_{p+q = n}\paren{\front q \otimes \back p} \\
+        &= (-1)^{pq} f\paren{\back{p}} \cdot \front{n-p}.
+\end{align*}
+
+\begin{prop}[Properties of the cap product with respect to other operations]
+\hfill
+    \begin{enumerate}
+        \item (Augmentation) For the augmentation $\epsilon \colon \Delta_0(X) \to \Lambda$ and any $0$-chain $c \in \Delta_0(X)$, 
+            \[
+                \epsilon \cap c = c.
+            \]
+
+        \item (Krönecker pairing) For any cochain $f \in \Delta^p(X)$ and chain $c \in \Delta_p(X)$ (of the same degree), 
+            \begin{equation*}\xymatrix@R=0.7em{%
+                {\Delta}^{p}\paren{X} \otimes {\Delta}_{p}\paren{X} 
+                    \ar[r]^-\cap & \Delta_0(X) 
+                    \ar[r]^\epsilon & \Lambda \\
+                f \otimes c 
+                    \ar@{|->}[r] & f \cap c
+                    \ar@{|->}[r] & \epsilon(f \cap c) = f(c)
+                }
+            \end{equation*}
+            That is, the cap product coincides with the Krönecker pairing (if interpreted correctly).
+
+        \item (Cup product) For any two cochains $f \in {\Delta}^{p}\paren{X}$, $g \in {\Delta}^{k}\paren{X}$, and any chain $c \in {\Delta}_{n + k}\paren{X}$, 
+            \[
+                (f \cup g) \cap c = f \cap (g \cap c) \qq{(which is $0$ if $p+k \ge n$).}
+            \]
+
+        \item (Induced chain maps) For any map of spaces $X \xrightarrow{\phi} Y$, any cochain $f \in \Delta^p(X)$, and any chain $c \in \Delta_n(X)$, the chain maps $\phi_\Delta$ and $\phi^\Delta$ satisfy
+            \[
+                \phi_\Delta\paren{ \phi^\Delta (f) \cap c} = f \cap \phi_\Delta(c).
+            \]
+
+        \item (Boundary maps) For any cochain $f$ and chain $c$, 
+            \[
+               \partial\paren{f \cap c} = \delta\paren{f} \cap c + (-1)^{\deg f} f \cap \partial{c}.
+            \]
+    \end{enumerate}
+\end{prop}
+
+The cap product on chains and cochains descends to (co)homology by the boundary formula above (\ref{cupproductoncochains}).
+\begin{equation*}
+    \frown \colon {H}^{p}\paren{X} \otimes {H}_{n}\paren{X} \to {H}_{n-p}\paren{X}.
+\end{equation*}
+
+\begin{prop}[Relation of the cap product on homology classes to other operations]
+    \hfill
+    \begin{enumerate}
+        \item (Triviality) For $1 \in {H}^{0}\paren{X}$ the class of the augmentation, and any $\gamma \in {H}_{n}\paren{X}$, 
+            \[
+                1 \frown \gamma = \gamma.
+            \]
+
+        \item (Krönecker pairing) For $\epsilon_*$ induced from the augmentation, $\alpha \in H^p$, and $\gamma \in H_p$, 
+        \[
+            \epsilon_*(\alpha \frown \gamma) = \ang{\alpha, \gamma}.
+        \]
+
+        \item (Cup product) $(\alpha \smile \beta) \frown \gamma = \alpha \frown (\beta \frown \gamma)$.
+        \item (Naturality)  $\phi_* \paren{\phi^* \alpha \frown \gamma} = \alpha \frown \phi_* \gamma$.
+        \item (Annihilation) For $\alpha \smile \beta$ in $H^p$, $\gamma \in H_p$, \TODO.
+        \item (Cross product) We have $(\alpha \times \beta) \cap (a \times b) = (-1)^{\deg \alpha \deg \beta} (\alpha \cap a ) \times (\beta \cap b)$. 
+    \end{enumerate}
+\end{prop}
+
+The cup and cap product have an \emph{adjoint-ish} relationship with each other (but, on facebook, \texttt{it's complicated}).
+
+\begin{note}[]
+    Manifolds will have a canonical class to cap with. The purpose of the development now is to reach Poincaré duality for manifolds. 
+    Suppose I have a symmetric monoidal category. Then I have a notion of ``a ring object'' in the category. The cap product then gives a \emph{pairing}.
+\end{note}
+ 
+\begin{rem}[Fundamental class of a manifold]
+    Say $M \in \Man$ is a (closed, compact, orientable) $n$-manifold. 
+    Then with $[M] \in H_n(M)$ the fundamental class, the pairing 
+    \begin{align*}
+        H^p(M) \otimes H_n(M) & \to H_{n-p}(M)\\
+        \alpha & \mapsto \alpha \cap [M]
+    \end{align*}
+    will induce an isomorphism.
+\end{rem}
+
+\begin{defn}[Topological manifolds]
+An $n$-manifold is a (second-countable) Hausdorff topological space $M$ such that every $x \in M$ has a neighborhood homeomorphic to $\R^n$. 
+\end{defn}
+
+\begin{rem}[``Feeling'' version of dual triangulations]
+Say that I triangulate $M$ with simplices $\sigma_i$ such that the alternating face maps are coherent with the triangulation. 
+If it is possible to define coherently, the \term{fundamental class} of the manifold $M$ is the boundary $\partial \paren{\sum_i \sigma_i} = [M]$. We'll define this rigorously in a bit.
+
+For example, $\RP^2$ can be triangulated, but fails to admit oriented $2$-cells.
+\end{rem}
+
+\begin{ex}[Dual cells as indicator functions]
+    Let $M \in \Man$ be sufficiently nice (compact, orientable) of dimension $n$ (for example, $2$). Then the $0$-cells (say, $u$, $w$, and $v$) are \term{paired} to the \term{indicator functions} on the $0$-cells.
+    \begin{equation}
+        D(u)^*, D(w)^*, D(v)^* \colon C_2^D(M) \to \Lambda.
+    \end{equation}
+    The dual cell structure arises from assigning each $k$-cell to a $n-k$-cell by the rule
+    \begin{equation*}
+        \ang{u_0, u_1, \ldots, u_k} \leftrightsquigarrow D(u_0) \cap D(u_1) \cap \ldots \cap D(u_k).
+    \end{equation*}
+\end{ex}
+
+\begin{todo}[]
+    Find a planar graph $(V, E, F)$, and algorithmically compute the dual graph.
+\end{todo}

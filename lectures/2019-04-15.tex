@@ -1,24 +1,26 @@
 \begin{quote}
     \textit{``Does the torus $S^1 \times S^1$ have a cohomology ring%
-        \footnote{\textsf{Hint.} The cohomology ring for $S^1$ is to $\RP^2$ as $\bl$ is to $\bl$ (?) with spheres adjoined (!?). \textsf{Moral.} Consider the homogeneous elements of the ring. Just describe the ring. For example, when algebraic topologists write $\Z[x]/\ang{x^4}$, it is understood to be \emph{a homogeneous ring}, with addition \emph{strictly levelwise} but with products (via the cup product) allowed between non-homogeneous degrees.}%
-    that's not a polynomial ring?''}
+        \footnote{\textsf{Hint.} The cohomology ring for $S^1$ is to $\RP^2$ as $\bl$ is to $\bl$ (?) with spheres adjoined (!?). 
+        Consider the homogeneous elements of the ring. 
+        Just describe the ring. 
+        For example, when algebraic topologists write $\Z[x]/\ang{x^4}$, it is understood to be \emph{a homogeneous ring}. Addition is \emph{strictly levelwise}. Products are defined between two homogeneous elements of non-homogeneous degrees.}
+    that's not a polynomial ring? Does any space?''}
 \end{quote}
 
-Let $X$ and $Y$ be topological spaces and $\Lambda$ a commutative unital ring. 
-Last time, we proved that the Eilenberg-Zilber chain map $\theta$ was a natural homotopy inverse of the cross product~$\times$. 
-Knowing $\theta$ and $\times$ are (chain-)homotopy equivalences, $\theta \colon {\Delta}_{*}\paren{X \times Y} \to {\Delta}_{*}\paren{X} \otimes {\Delta}_{*}\paren{Y}$ defines a chain equivalence.
-Therefore, with either $\times$ or $\theta$, depending on whether we need a \emph{push-forward} or \emph{pullback} we know we can compute the homology and cohomology of the product $X \times Y$ from the tensor chain complex ${\Delta}_{*}\paren{X} \otimes {\Delta}_{*}\paren{Y}$. 
-It's not at all apparent, however, what map $\times$ induces on cohomology:
-\begin{equation}
-    \label{crossinduced}
-    \times \colon H^*\paren{ X; \Lambda } \otimes \coho{Y}{\Lambda} \overset{?}{\to} \coho{X\times Y}{\Lambda}.
-\end{equation}
-
+Recall that last week, we proved the Eilenberg-Zilber chain map $\theta$ was a natural homotopy inverse of the cross product~$\times$. 
+And last lecture, knowing $\theta$ and $\times$ are (chain-)homotopy equivalences, we exploited the chain equivalence $\theta \colon {\Delta}_{*}\paren{X \times Y} \to {\Delta}_{*}\paren{X} \otimes {\Delta}_{*}\paren{Y}$
+to define the cross product and the cup product on cohomology groups. 
 \begin{note}[]
+   It's not at all apparent, however, what map $\times$ induces on cohomology:
+   \begin{equation}
+       \label{crossinduced}
+       \times \colon H^*\paren{ X; \Lambda } \otimes \coho{Y}{\Lambda} \overset{?}{\to} \coho{X\times Y}{\Lambda}.
+   \end{equation}
     In general, there's no Künneth theorem for the cohomology cross product. 
     But, if the ring of coefficients $\Lambda$ is a field and either ${H}_{*}\paren{X;\Lambda}$ or ${H}_{*}\paren{Y;\Lambda}$ is of finite type, then the map in \eqref{crossinduced} is an isomorphism. 
     (E.g., if $\Lambda = \R$ and $X$ is a compact $n$-manifold.)
 \end{note}
+This lecture we'll give details for making computations with the cup product. Let $X$ and $Y$ be topological spaces and $\Lambda$ a commutative unital ring. 
 
 \begin{todo}[]
     Say $f\colon A_* \to \Lambda$ and $g\colon B_* \to \Lambda$ are cochains in the complexes $A^*(\Lambda)$ and $B^*(\Lambda)$. 
@@ -30,7 +32,12 @@ It's not at all apparent, however, what map $\times$ induces on cohomology:
     for chains $a \in A_*$ and $b \in B_*$.
 \end{todo}
 
-We certainly have an \term{evaluation} $\ev$ from the group of $p$-cochains $f \colon \Delta_p(X) \to \Lambda$ tensored with the group $\Delta_p(X)$ of $p$-chains,
+\begin{coro}
+    For the singular chain complexes over a topological space $X$, let $f, g$ be cochains in $\Delta^*(X)$ and $\alpha, \beta$ chains in $\Delta_*(X)$. 
+    Then, $(f\otimes g)(\alpha \times \beta) = (-1)^{\deg \alpha \deg g} f(\alpha)g(\beta)$.
+\end{coro}
+
+Now, we certainly have an \term{evaluation} $\ev$ from the group of $p$-cochains $f \colon \Delta_p(X) \to \Lambda$ tensored with the group $\Delta_p(X)$ of $p$-chains,
 \[
     \Delta^p(X; \Lambda) \otimes \Delta_p(X) \xrightarrow{\ev} \Lambda,
 \]
@@ -38,13 +45,13 @@ defined by
 \[
     \ev\colon f \otimes c \mapsto f(c).
 \] 
-In fact, $\ev$ induces a map on cohomology, which is denoted by the brackets (in Halmos style) 
+In fact, $\ev$ induces a map on cohomology, which is denoted by the angle brackets
 \[
     \ang{\bkt{f}, \bkt{c}} \in \Lambda.
 \]
 
 \begin{lem}[Krönecker pairing]
-   The evaluation $\Delta^p(X; \Lambda) \otimes \Delta_p(X) \xrightarrow{\ev} \Lambda$ induces a homomorphism out of the graded ring
+   The evaluation $\Delta^p(X; \Lambda) \otimes \Delta_p(X) \xrightarrow{\ev} \Lambda$ induces a $\Lambda$-linear map
    \begin{equation}
        \label{kpairing}
        H^p(X;\Lambda) \otimes H_p(X) \to \Lambda
@@ -56,20 +63,18 @@ In fact, $\ev$ induces a map on cohomology, which is denoted by the brackets (in
     (\TODO: revise) The \term{Kronecker pairing} is the argument that $f(c)$ does not depend on representatives $f$ or $c$ (from the cochain, resp, chain complexes). Consider that in the proof of the universal coefficient theorem, we found a map $\beta$ from $\coho{X}{\Lambda}$ to $\Hom(H_p(X), \Lambda)$ such that $\abs{f} \mapsto \set{ \abs{c} \mapsto f(c) }$ gave a group homomorphism. Use this.
 \end{proof}
 
-\begin{lem}[A sign convention]
-    For the singular chain complexes over a topological space $X$, let $f, g$ be cochains in $\Delta^*(X)$ and $\alpha, \beta$ chains in $\Delta_*(X)$. 
-    Then, $(f\otimes g)(\alpha \times \beta) = (-1)^{\deg \alpha \deg g} f(\alpha)g(\beta)$.
-\end{lem}
-
-\begin{defn}[Cap product]
+\begin{rem}
     The \term{cap product} operation over a topological space $X$ is the above~\eqref{kpairing} pairing, which is ``given by combining the \term{Kronecker pairing} of the cohomology class with the image of the homology class under diagonal and using the Eilenberg-Zilber theorem.'' (See \url{https://ncatlab.org/nlab/show/cap+product}.)
-\end{defn}
+\end{rem}
 
-\begin{defn}[Cup product]
-    Let $X \in \Top$ and consider the diagonal map $d \colon X \to X \times X$. There's an induced chain map $d_\Delta \colon \Delta_*(X) \to \Delta_*(X)$. Then $d_\Delta$ precomposed with $\theta$ (from Eilenberg-Zilber) is the natural \term{diagonal approximation} $\Delta$. Schematically,
+\begin{defn}[The cup product on cochains]
+   \label{cupproductoncochains}
+    Let $X \in \Top$. The diagonal map $d \colon X \to X \times X$, induces $d_\Delta \colon \Delta_*(X) \to \Delta_*(X)$. 
+    Define a natural \term{diagonal approximation} $\Delta = d_\Delta \circ \theta$, where $\theta$ is the chain equivalence from the Eilenberg-Zilber theorem.
     \begin{equation*}
     \begin{gathered}\xymatrix@=1em{%
         % should this be injective?  <ccg, 2019-04-15> %
+         % duh! free groups! 
         0 \ar[r]
         & \Delta_*(X) \ar@{->}[r]^-{d_\Delta} \ar@/_2pc/[rr]^\Delta
         & \Delta_*(X \times X) \ar[r]^-\theta 
@@ -77,7 +82,7 @@ In fact, $\ev$ induces a map on cohomology, which is denoted by the brackets (in
     }
     \end{gathered}
     \end{equation*}
-    The \term{cup product} of two homogeneous cochains $f$ and $g$ is thus defined to be 
+    The \term{cup product of homogeneous cochains} $f$ and $g$ is
     \[
         f \smile g = (f \otimes g) \theta d_\Delta.
     \]
