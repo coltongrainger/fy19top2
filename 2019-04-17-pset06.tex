@@ -23,7 +23,7 @@
            \]}
     \end{enumerate}
 
- \newpage
+\newpage
 
  \begin{note}[See Chapter VI, Section 4 and Example 4.12.]
     By a \emph{graded commutative ring}, we will mean a graded abelian group $R^*$ together with a homomorphism of graded abelian groups $\mu \colon R^* \otimes R^* \to R^*$ such that,
@@ -119,11 +119,15 @@
    In particular, \[\delta \iota_n \in \Delta_{n-1}(\Delta_n)\] is a $n-1$-chain. 
    So say that $A$ and $B$ are diagonal approximations for the singular chain complex $\sich * \Delta_n$.
    By the inductive hypothesis, the homomorphisms $\eta_p$ for $p < n$ are defined. Therefore
-   \begin{equation}
+   \begin{align*}
       \label{indhypo}
-      \paren{A_{n-1} - B_{n-1}}(\partial\iota_n) = \paren{\delta_{n1} \eta_{n-1} - \eta_{n-2} \partial_{n-1}}(\partial \iota_r),
-   \end{equation}
+      & \paren{A_{n-1} - B_{n-1}}(\partial\iota_n) = \paren{\delta_{n} \eta_{n-1} - \eta_{n-2} \partial_{n-1}}(\partial \iota_r) \\
+      & \iff \paren{A_{n-1} - B_{n-1} - \eta_{n-2} \partial_{n-1}}(\partial\iota_n) =  \paren{\delta_{n} \eta_{n-1}}(\partial \iota_r) \\
+      & \iff \paren{A_{n-1} - B_{n-1}}(\partial\iota_n) =  \paren{\delta_{n} \eta_{n-1}}(\partial \iota_r) 
+   \end{align*}
    is an equality of chains in $\paren{\sich * \Delta_r \otimes \sich * \Delta_n}_{n-1}$. 
+
+   Computing the boundary of $\ldots$ (we finished this proof in lecture.)
 \end{proof}
 
 \end{enumerate}

@@ -2,39 +2,46 @@
 
 \course{Math 6220}
 \psnum{5}
-\author{Colton Grainger (notes)\\Ryan Mike (presenter)}
+\author{Ryan Mike (presenter), Colton Grainger (scribe)}
 \date{\today}
+
+\newcommand{\cyl}[1]{\mathrm{cyl}\paren{#1}} 
 
 \begin{document}
 
 \maketitle
 
-We work in the category $\cat{Ch}$ of \term{chain complexes} of \term{graded abelian groups}. 
+We work in the category $\cat{Ch}$, \term{chain complexes} of graded abelian groups. 
 
 \begin{enumerate}
 
-        \newcommand{\cyl}[1]{\mathrm{cyl}\paren{#1}} 
 
-    \item For a given chain complex $C$, let $\cyl C$ denote the \term{mapping cylinder of the identity map} on $\id \colon C \to C$. 
-        To be explicit, \emph{what is $\cyl C$?} 
-        Well, if $C$ is described by the level-wise groups and differentials
+    \item For a given chain complex $C$, let $\cyl C$ denote the \term{mapping cylinder} of the identity map on $\id \colon C \to C$. 
+        The chain complex $\cyl C$ encodes the following data:
+        If $C$ is described by the level-wise groups and differentials
         \begin{equation*}
-            C = \set{C_{i+1} \xrightarrow{d_{i+1}} C_{i}}_{i\in \Z}
+            C = \set{C_{i+1} \xrightarrow{d_{i+1}} C_{i} : \text{for all $i \in \Z$}},
         \end{equation*}
-        then the mapping cylinder $\cyl C$ is described by level-wise groups and differentials
+        then the mapping cylinder $\cyl C$ is described by level-wise groups and differentials 
         \begin{equation*}
-            \cyl C = \set{ \xymatrix{ C_i \ar[r]^{d_i} & C_{i-1} \\
+            \cyl C = \set{ 
+            \begin{gathered}
+                \xymatrix@C=7em{ C_i \ar[r]^{d_i} & C_{i-1} \\
                         C_{i-1} \ar[r]^{-d_{i-1}} \ar[ru]^{\id} \ar[rd]^{-\id} & C_{i-2} \\
-                         C_i \ar[r]^{d_i} & C_{i-1} } : \qq{where $\id \colon C \to C$ is the identity}},
+                         C_i \ar[r]^{d_i} & C_{i-1} }
+            \end{gathered} : \text{for all $i \in \Z$}
+            }.
         \end{equation*}
-        where each level-wise group $(\cyl C)_i$ is the direct product of groups, $C_i \oplus C_{i-1} \oplus C_i$, 
-        and the arrows indicate how elements of one component group are mapped into a component group of the next degree lower in the chain complex $\cyl C$.
-        Writing the level-wise groups as column vectors and the differential $\partial$ of $\cyl C$ as a matrix is elucidating, and will be helpful for computation.
+        Each level-wise group $(\cyl C)_i$ is the direct sum of groups $C_i \oplus C_{i-1} \oplus C_i$, 
+        where $\id \colon C \to C$ is the identity,
+        and where arrows indicate how a component group is mapped into a component group of lesser degree in the chain complex $\cyl C$.
+
+        Writing the level-wise groups as column vectors and the differential $[\partial]$ of $\cyl C$ as a matrix is elucidating, and will be helpful for computation:
         \begin{equation*}
-            \mqty[d & \id & 0\\ 0 & -d & 0\\ 0 & -\id & d] \colon \mqty[C_i\\C_{i-1}\\C_i]  \mapsto \mqty[C_{i-1}\\C_{i-2}\\C_{i-1}].
+            [\partial] = \mqty[d & \id & 0\\ 0 & -d & 0\\ 0 & -\id & d] \colon \mqty[C_i\\C_{i-1}\\C_i]  \mapsto \mqty[C_{i-1}\\C_{i-2}\\C_{i-1}].
         \end{equation*}
 
-        Now, say that $D$ is another chain complex that's the codomain of two chain maps $f, g \colon C \to D$.  
+        Now, say that $D$ is another chain complex that's the target of two chain maps $f, g \colon C \to D$.
 
         \begin{claim*}[Extending chain maps to a mapping cylinder]
             \label{extending_chain_maps_to_a_mapping_cylinder}
@@ -42,19 +49,23 @@ We work in the category $\cat{Ch}$ of \term{chain complexes} of \term{graded abe
             \begin{equation*}
                 \mqty[f & \mathcal{S} & g] \colon \cyl C \to D,
             \end{equation*}
-            where $\mathcal{S} \colon C \to D$ is (\emph{not a chain map}, but) a sequence of level-wise sections of homological degree $+1$
+            where $\mathcal{S} \colon C \to D$ is a sequence%
+                \footnote{%
+                    Note that $\mathcal{S}$ is \emph{not} a chain map. For example, if $f = g$, then the maps in $\mathcal{S}$ satisfy $ds + sd = 0$, and \emph{not} $ds = sd$.
+                } 
+                of level-wise sections of homological degree $+1$.
             \[
-            \xymatrix@=0.7em{
-                \vdots \ar[d]          &  & \vdots \ar[d] \\
-                C_{i+1} \ar[ur]^{s_i} \ar[d] &  & D_{i+1} \ar[d]
-                C_{i} \ar[ur]^{s_{i-1}} \ar[d]   &  & D_{i} \ar[d] \\
-                C_{i-1} \ar[ur]^{s_{i-2}} \ar[d] &  & D_{i} \ar[d]\\
-                \vdots                 &  & \vdots }.
+            \xymatrix@C=5em{
+                \vdots \ar[d]                      & \vdots \ar[d] \\
+                C_{i} \ar[ur]^{s_i} \ar[d]       & D_{i+1} \ar[d] \\
+                C_{i-1} \ar[ur]^{s_{i-1}} \ar[d]     & D_{i} \ar[d] \\
+                C_{i-r} \ar[ur]^{s_{i-2}} \ar[d]   & D_{i} \ar[d]\\
+                \vdots   \ar[ur]^{s_{i-3}}         & \vdots }.
             \]
         \end{claim*}
 
         \begin{proof}
-            By definition, the chain maps $f$ and $g$ are chain homotopic if there exists a sequence $\set{H_i}_{i \in \Z}$ of group homomorphisms
+            By definition, the chain maps $f$ and $g$ are chain homotopic if and only if there exists a sequence $\set{H_i}_{i \in \Z}$ of group homomorphisms
             \begin{equation*}
                 \set{C_{i} \xrightarrow{H_i} D_{i+1}}_{i\in \Z}
             \end{equation*}
@@ -64,11 +75,11 @@ We work in the category $\cat{Ch}$ of \term{chain complexes} of \term{graded abe
                 \paren{f_i- g_i}(c) = \paren{d_{i} H_{i-1} - H_{i} d_{i-1}}(c).
             \end{equation}
             
-            On the other hand, $\mqty[f & \mathcal{S} & g]$ is a chain map if the following diagram commutes:
+            On the other hand, $\mqty[f & \mathcal{S} & g]$ is a chain map if and only if for each $i \in \Z$, the following diagram commutes:
             \begin{equation}
                 \label{chaincondition}
-            \begin{gathered}\xymatrix@=1em{%
-                    (\cyl C)_i \ar[dd]^{\mqty[f & \mathcal{S} & g]} \ar[rr]^d 
+            \begin{gathered}\xymatrix@R=2em{%
+                    (\cyl C)_i \ar[dd]_{\mqty[f & \mathcal{S} & g]} \ar[rr]^{[\partial]}
                         &  
                         & (\cyl C)_{i-1} \ar[dd]^{\mqty[f & \mathcal{S} & g]} \\
                         & & \\
@@ -79,59 +90,148 @@ We work in the category $\cat{Ch}$ of \term{chain complexes} of \term{graded abe
             \end{gathered}
             \end{equation}
             
-            The composition $(\cyl C)_i \to (\cyl C)_{i-1} \to D_{i-1}$ along the upper right corner is computed
-            \begin{equation*}
+            We compute the composition $(\cyl C)_i \to (\cyl C)_{i-1} \to D_{i-1}$ along the upper right corner of \eqref{chaincondition},
+            \begin{equation}
+                \label{urcorner}
                 \mqty[f & \mathcal{S} & g]
                 \mqty[d & \id & 0\\ 0 & -d & 0\\ 0 & -\id & d]             
-                    = \mqty[fd & f - sd - g  & gd],
-            \end{equation*}
-            whereas the composition $(\cyl C)_i \to D_i \to D_{i-1}$ along the lower left corner is computed
-            \begin{equation*}
+                    = \mqty[fd & f - sd - g  & gd].
+            \end{equation}
+            We also compute the composition $(\cyl C)_i \to D_i \to D_{i-1}$ along the lower left corner of \eqref{chaincondition},
+            \begin{equation}
+                \label{llcorner}
                 \mqty[d] \mqty[f & \mathcal{S} & g]
                     = \mqty[df & ds & dg].
-            \end{equation*}
+            \end{equation}
 
-            Now $df = fd$ and $dg = gd$ by our assumption that $f, g \colon C \to D$ are chain maps. 
-            Hence, the following are equivalent.
-            \begin{enumerate}
-                \item $f, g \colon C \to D$ extends to a chain map $\mqty[f & \mathcal{S} & g] \colon \cyl C \to D$ from the cylinder on $C$.
-                \item The diagram \ref{chaincondition} commutes.
-                \item For each $i$, the maps $(\cyl(C))_i$ to $D_i$ on the upper right and lower left of \ref{chaincondition} are equal.
+            Now $df = fd$ and $dg = gd$ by the hypotheses that $f, g \colon C \to D$ are chain maps. Comparing entries in \eqref{llcorner} and \eqref{urcorner}, the following are equivalent:
+            \begin{itemize}
+                \item $f, g \colon C \to D$ extends to a chain map $\mqty[f & \mathcal{S} & g] \colon \cyl C \to D$.
+                \item The diagram \eqref{chaincondition} commutes.
+                \item For each $i$, the maps $(\cyl C)_i$ to $D_{i-1}$ on the upper right and lower left of \eqref{chaincondition} are equal.
                 \item For each $i$, the maps%
                     \footnote{%
-                        Please mind the indices. Recall that the center component of $(\cyl(C))_i$ is $C_{i-1}$, hence our maps are shifted down by $1$ degree from what one might expect.
-                    } $f_{i-1} - s_{i-2}d_{i-1} - g_{i-1} = d_{i}s_{i-1}$ from the center component of $(\cyl(C))_i$ to $D_{i-1}$ are equal.
+                        Note the indices: the center component of $(\cyl C)_i$ is $C_{i-1}$. Maps out of the center component are thus shifted $-1$ degree from what one might expect.
+                    } $f_{i-1} - s_{i-2}d_{i-1} - g_{i-1} = d_{i}s_{i-1}$ from the center component of $(\cyl C)_i$ to $D_{i-1}$ are equal.
                 \item For each $i$, the levelwise maps satisfy $f - g = ds + sd$.
                 \item $\mathcal{S}$ is a chain homotopy between $f, g \colon C \to D$.
-            \end{enumerate}
+            \end{itemize}
+        We have proven that $f, g \colon C \to D$ are chain homotopic if and only if they extend to a chain map $\cyl C \to D$.
         \end{proof}
 
-        \item  Let $A$ and $B$ be chain complexes.
-            Define the \term{tensor chain complex} $A \otimes B$ as the graded abelian group
-            \begin{equation*}
-                (A \otimes B)_n := \bigoplus_{i + j =n} A_i \otimes B_j
-            \end{equation*}
-            with differential
-            \begin{equation*}
-                \partial\paren{a \otimes b} := d_i^A(a) \otimes b + (-1)^i a \otimes d^B_j(b)
-            \end{equation*}
-            for each $i$-chain $a$ and each $j$-chain $b$ in $A_i$ and $B_j$, respectively.
+    \item  Let $A$ and $B$ be chain complexes.
+        Define the \term{tensor chain complex} $A \otimes B$ as the graded abelian group
+        \begin{equation*}
+            (A \otimes B)_n := \bigoplus_{i + j =n} A_i \otimes B_j,
+        \end{equation*}
+        with differential, for each $i$-chain $a$ and each $j$-chain $b$ in $A_i$ and $B_j$, 
+        \begin{equation*}
+            \partial\paren{a \otimes b} := d_i^A(a) \otimes b + (-1)^i a \otimes d^B_j(b).
+        \end{equation*}
 
-            \begin{enumerate}
-                \item $A \otimes B$ with the alternative face map $\partial$ is a chain complex.
-                    \begin{proof}
-                        
+        \begin{claim*}[Tensor product of complexes are complexes]
+            \label{claim:the_tensor_product_of_complexes_is_a_chain_complex}
+            $A \otimes B$ with differential $\partial$ is a chain complex.
+        \end{claim*}
+
+        \begin{proof}
+            It suffices to show that $\partial^2 = 0$, which follows. Consider $a \otimes b$, where $a \in A_i$ and $b \in B_j$
+            \begin{align*}
                 \partial^2\paren{a \otimes b} 
-                        = \partial\paren{d_i^A(a) \otimes b + (-1)^i a \otimes d^B_j(b)}
-                        = \partial\paren{d_i^A(a) \otimes b} + (-1)^i \partial\paren{a \otimes d^B_j(b)}
-                        = d_{i-1}^A d_i^A(a) \otimes b + (-1)^{i-1} d_i^A(a) \otimes d^B_{j-1}(b)
-                        + (-1)^{i}\paren{d_{i-1}^A(a) \otimes d^B_j(b) + (-1)^{i-1} a \otimes d^B_{j-1}d^B_j(b)
-                    \end{proof}
-                \item For the chain complex $I$ defined by 
-                    $I_0 = \Z\{\ell_0, \ell_1\}$, $I_1 = \Z\{\ell\}$, and $I_i = 0$ for $i < 0$ or $i >1$,
-                    with differential $d_1(\ell) = \ell_1 - \ell_0$,
-                    $\cyl C \cong I \otimes C$.
-            \end{enumerate}
+                       &  = \partial\paren{\textcolor{blue}{d_i^A(a) \otimes b} \quad + \quad  \textcolor{red}{(-1)^i a \otimes d^B_j(b)}} \\
+                       &  = \textcolor{blue}{\partial\paren{d_i^A(a) \otimes b} }\quad + \quad  \textcolor{red}{(-1)^i \partial\paren{a \otimes d^B_j(b)}} \\
+                       &  = \textcolor{blue}{ d_{i-1}^A d_i^A(a) \otimes b + (-1)^{i-1} d_i^A(a) \otimes d^B_{j}(b) } \\
+                       &  \hspace{8em}  + \quad \textcolor{red}{ (-1)^{i}\paren{d_{i}^A(a) \otimes d^B_j(b) + (-1)^{i} a \otimes d^B_{j-1}d^B_j(b)} } \\
+                       &  = \textcolor{blue}{ (-1)^{i-1} d_i^A(a) \otimes d^B_{j}(b) } + \textcolor{red}{ (-1)^{i}\paren{d_{i}^A(a) \otimes d^B_j(b)} } \\
+                       & = 0.
+            \end{align*}
+            We have shown that $\partial$ is order $2$, because $\partial^2 \paren{a \otimes b} = 0$, and 
+            each chain in any levelwise group $(A \otimes B)_i$ is a linear combination of tensors of the form $a \otimes b$. 
+        \end{proof}
+
+        \begin{claim*}[Mapping cylinders are realized as tensor products]
+            \label{claim:the_mapping_cylinder_is_a_tensor_product_of_complexes}
+            Let $I$ be the chain complex defined
+                    \begin{itemize}
+                        \item as the graded abelian group $I$ such that $I_0 = \Z\{\ell_0, \ell_1\}$, $I_1 = \Z\{\ell\}$, and $I_i = 0$ if $i \neq 0,1$,
+                        \item with differential $d$ such that $d_1(\ell) = \ell_1 - \ell_0$ and $d_i = 0$ for all $i \neq 1$.
+                    \end{itemize}
+            Then $\cyl C \cong I \otimes C$.
+        \end{claim*}
+        \begin{proof}
+            Recognize the free abelian group $\Z\{\ell_0, \ell_1\} \cong \Z \oplus \Z$. 
+            Because the tensor product commutes with direct sums, for an arbitrary abelian group $\mathcal{A}$, there's an natural isomorphism 
+            \begin{equation*}
+                \Z\set{\ell_0, \ell_1} \otimes \mathcal{A} \xrightarrow{\cong} \paren{ \Z \otimes \mathcal{A} }^{\oplus 2}.
+            \end{equation*} 
+            Moreover, this tensor product is over $\Z$, so $\paren{ \Z \otimes \mathcal{A} }^{\oplus 2} \cong \mathcal{A} \oplus \mathcal{A}$.
+            Accounting for $\Z\set{\ell}$ in a similar fashion, it follows that, for any degree $i \in \Z$, the abelian group $\paren{I \otimes C}_i$ is naturally isomorphic to the direct sum 
+            \begin{equation}
+                \label{isom}
+                \paren{\Z\ell_1 \otimes C_i} \oplus \paren{\Z\ell \otimes C_{i-1}} \oplus \paren{\Z\ell_0 \otimes C_i} 
+                    \xrightarrow{\cong} C_i \oplus C_{i-1} \oplus C_i.
+            \end{equation}
+            Therefore, as graded abelian groups, $I \otimes C \cong_{\cat{GrAb}} \cyl C$.
+
+            Considering the RHS and LHS of \eqref{isom}, we deduce that $d$ of $I$ induces the differential $\partial$ on $I \otimes C$ as follows:
+        \begin{equation*}
+            \set{ 
+            \begin{gathered}
+                \xymatrix@C=7em{ 
+                    \Z\ell_1 \otimes C_i 
+                        \ar[r]^{\id \otimes d_i} 
+                        & \Z\ell_1 \otimes C_{i-1} \\
+                    \Z\ell \otimes C_{i-1} 
+                        \ar[r]^{- \id \otimes d_{i-1}} 
+                        \ar[ru]^{\bkt{\ell\to\ell_0} \otimes \id} 
+                        \ar[rd]^{-\bkt{\ell\to\ell_1} \otimes \id}
+                        & \Z\ell \otimes C_{i-2} \\
+                    \Z\ell_0 \otimes C_i 
+                        \ar[r]^{\id \otimes d_i} 
+                        & \Z\ell_0\otimes C_{i-1} }
+            \end{gathered} : \text{$i \in \Z$}
+            } \leftrightsquigarrow
+            \set{ 
+            \begin{gathered}
+                \xymatrix@C=7em{ C_i \ar[r]^{d_i} & C_{i-1} \\
+                        C_{i-1} \ar[r]^{-d_{i-1}} \ar[ru]^{\id} \ar[rd]^{-\id} & C_{i-2} \\
+                         C_i \ar[r]^{d_i} & C_{i-1} }
+            \end{gathered} : \text{$i \in \Z$}
+            }.
+        \end{equation*}
+            Hence, if $\phi \colon I \otimes C \to \cyl C$ is the natural isomorphism of graded abelian groups in \ref{isom}, then $\phi \circ \partial = d \circ \phi$. So $\phi$ is an invertible chain map, thus $I \otimes C \cong_{\cat{Ch}} \cyl C$ as chain complexes.
+        \end{proof}
+
+        \begin{note}[]
+            Say that $\Delta_1$ and $\Delta_2$ are abstract ordered simplices. The product $\Delta_1 \times \Delta_2$ contains $6$ vertices, so is \emph{not} a $3$-simplex. However, there's an operator, call it $\times$, that takes $\Delta_1 \times \Delta_2$ and makes an ordered decomposition into $3$ adjacent $3$-simplices, each pairwise sharing $3$ vertices. How does the rule $\times$ for the decomposition \[\Delta_1 \times \Delta_2 \overset{\times}{\mapsto} \Delta_3 \sqcup \Delta_3 \sqcup \Delta_3 / \thicksim\] correspond to the rule on signs for the differential $[\partial]$ on the mapping cylinder? I really don't know.
+        \end{note}
+
+            \begin{equation*}
+            \begin{gathered}\xymatrix@R=7em@C=12em{%
+                & C_{i-1} 
+                    \ar[lddd]_{-\id}
+                    \ar[rddd]^{\id}
+                    \ar[dd]^{-d_{i-1}} 
+                    & \\
+                C_i \ar[dd]_{d_i} 
+                    \ar@{.>}[ur] 
+                    \ar@/_1pc/@{.>}[ddrr]
+                    &  
+                    & C_i 
+                    \ar@/^/@{.>}[ll]
+                    \ar@{.>}[ul] 
+                    \ar[dd]^{d_i} \\
+                & C_{i-2} 
+                    & \\
+                C_{i-1} 
+                    \ar@{.>}[ur] 
+                    &  & 
+                    C_{i-1} 
+                    \ar@/^/@{.>}[ll] 
+                    \ar@{.>}[ul] 
+                }
+            \end{gathered}
+            \end{equation*}
 \end{enumerate}
 
 \end{document}

@@ -1,0 +1,21 @@
+We make a little correction from the last lecture.
+
+\begin{lem}[Local homology]
+    \label{lem:local_homology}
+    Every $x \in M$ has  a neighborhood $x \in U \subset \R^n$ such that 
+    \begin{equation*}
+        {H}_{n}\paren{M, M\setminus U; \Lambda} \xrightarrow{\cong} {H}_{n}\paren{M, M- x; \Lambda}.
+    \end{equation*}
+\end{lem}
+
+Fix a generator $a_x \in {H}_{n}\paren{M, M - x}$ a generator for each $x \in M$.
+
+\begin{rem}[A canonical isomorphism with into the tensor product]
+    \label{rem:tensorcanon}
+    There's  a canonical isomorphism  (as torsion vanishes on local homology groups)
+    \begin{equation*}
+        {H}_{n}\paren{M, M - x} \otimes \Lambda \to
+        {H}_{n}\paren{M, M - x; \Lambda}
+    \end{equation*}
+    such that if $a_x = \abs{c}$, then  $\abs{c} \mapsto \abs{c \otimes 1}$.
+\end{rem}
